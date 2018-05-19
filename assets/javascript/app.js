@@ -69,9 +69,8 @@ $("#enterChatText").on("click", function(event) {
   event.preventDefault();
 
   // Grabbed values from text boxes
-  text = $("#chatInput")
-    .val()
-    .trim();
+  text = $("#chatInput").val().trim();
+  $("#chatInput").val("");
   // Code for handling the push
   database.ref().push({
     text: text,
