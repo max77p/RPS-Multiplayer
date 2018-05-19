@@ -33,7 +33,7 @@ connectedRef.on("value", function(snap) {
 
 connectionsRef.on("value", function(snap) {
   // Display the viewer count in the html.
-  $('#userList').html(snap.numChildren());
+  $('#userList').html("current number of users: "+snap.numChildren());
   // The number of online users is the number of children in the connections list.
   //$("#watchers").append("hurry! " + snap.numChildren() + " are bidding");
   console.log(snap.numChildren());
