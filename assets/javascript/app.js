@@ -26,7 +26,6 @@ connectedRef.on("value", function(snap) {
   if (snap.val()) {
     // Add user to the connections list.
     var con = connectionsRef.push(true);
-
     // Remove user from the connection list when they disconnect.
     con.onDisconnect().remove();
   }
@@ -34,6 +33,7 @@ connectedRef.on("value", function(snap) {
 
 connectionsRef.on("value", function(snap) {
   // Display the viewer count in the html.
+  $('#userList').html(snap.numChildren());
   // The number of online users is the number of children in the connections list.
   //$("#watchers").append("hurry! " + snap.numChildren() + " are bidding");
   console.log(snap.numChildren());
