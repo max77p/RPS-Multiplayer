@@ -19,7 +19,6 @@ var connectionsRef = database.ref("/connections");
 
 var connectedRef = database.ref(".info/connected");
 
-
 connectedRef.on("value", function(snap) {
   // If they are connected..
   console.log(snap.val());
@@ -33,21 +32,49 @@ connectedRef.on("value", function(snap) {
 
 connectionsRef.on("value", function(snap) {
   // Display the viewer count in the html.
-  $('#userList').html("current number of users: "+snap.numChildren());
+  $("#userList").html("current number of users: " + snap.numChildren());
   // The number of online users is the number of children in the connections list.
-  //$("#watchers").append("hurry! " + snap.numChildren() + " are bidding");
   console.log(snap.numChildren());
 });
 
 //  At the page load and subsequent value changes, get a snapshot of the stored data.
 // This function allows you to update your page in real-time when the firebase database changes.
-database.ref().on(
-  "value",
-  function(snapshot) {
-    console.log(snapshot.val());
-  },
-  function(errorObject) {
-    //two different call back functions
+database.ref().on("child_added", function (childSnapshot, prevChildKey) {//gettings value to append to html
+
+    // Print the initial data to the console.
+    console.log(childSnapshot.val());
+
+    // Log the value of the various properties
+    var userText = childSnapshot.val().text;
+    
+
+    var userTd = $('<td id="name-display">').text(userText);
+  
+    
+    //TODO::Same thing for each td
+    var tRow=$('<tr>');
+    tRow.append(userTd);
+    //TODO::Add each other td
+
+    // Change the HTML
+    $('.tbody').first().append(tRow);
+    
+
+    // If any errors are experienced, log them to console.
+}, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
-  }
-);
+});
+
+$("#enterChatText").on("click", function(event) {
+  event.preventDefault();
+
+  // Grabbed values from text boxes
+  text = $("#chatInput")
+    .val()
+    .trim();
+  // Code for handling the push
+  database.ref().push({
+    text: text,
+    dateAdded: firebase.database.ServerValue.TIMESTAMP
+  });
+});

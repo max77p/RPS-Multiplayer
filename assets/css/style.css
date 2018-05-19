@@ -1,5 +1,10 @@
 .mainContainer{
-    height:30em;
+    max-height:20em;
    
     border:2px solid black;
+}
+
+.chatArea{
+    overflow:scroll;
+    max-height:10em;
 }
