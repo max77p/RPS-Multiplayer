@@ -54,7 +54,7 @@ $('#btnLogin').on("click",function(el){
 
   
 
-   loggedUserInfo.set({
+   loggedUserInfo.push({
       id: userId,
       username:askname
     });
