@@ -12,24 +12,37 @@
     <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
         crossorigin="anonymous">
+    <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" />
 </head>
 
 
 <body>
     <div class="container mainContainer">
         <h1 id="userList"></h1>
+        <div id="message">
+            <h1>Anonymous Login</h1>
+            <p> I know you're there, I just don't know who you are</p>
+            <ul>
+                <li>
+                    <button type="button" class="btn btn-primary" id="btnLogin">Login Anonymously</button>
+                </li>
+                <li>
+                    <a id="btnLogout" href="#" class="hide">Logout</a>
+                </li>
+            </ul>
+        </div>
+
+
         <div class="jumbotron chatArea">
-            
-                <table class="table">
-                    <tbody class="tbody">
-                        <tr>
+            <table class="table">
+                <tbody class="tbody">
+                    <tr>
 
-                        </tr>
+                    </tr>
 
-                    </tbody>
-                </table>
-
-          
+                </tbody>
+            </table>
 
         </div>
 

@@ -1,13 +1,16 @@
 // Initialize Firebase
-var config = {
-  apiKey: "AIzaSyAi8BmcQ15o7e9fptcEZYjwx-knllryTnc",
-  authDomain: "rpsgame-98ea6.firebaseapp.com",
-  databaseURL: "https://rpsgame-98ea6.firebaseio.com",
-  projectId: "rpsgame-98ea6",
-  storageBucket: "rpsgame-98ea6.appspot.com",
-  messagingSenderId: "505248843531"
-};
-firebase.initializeApp(config);
+
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAi8BmcQ15o7e9fptcEZYjwx-knllryTnc",
+    authDomain: "rpsgame-98ea6.firebaseapp.com",
+    databaseURL: "https://rpsgame-98ea6.firebaseio.com",
+    projectId: "rpsgame-98ea6",
+    storageBucket: "rpsgame-98ea6.appspot.com",
+    messagingSenderId: "505248843531"
+  };
+  firebase.initializeApp(config);
+
 
 //TODO: create rock paper scissors game
 //TODO: set database
@@ -75,5 +78,24 @@ $("#enterChatText").on("click", function(event) {
   database.ref().push({
     text: text,
     dateAdded: firebase.database.ServerValue.TIMESTAMP
+  });
+});
+
+// var auth = firebase.auth();
+// auth.signInAnonymously();//will return a promise
+// auth.signOut();
+// auth.onAuthStateChange(user);
+
+
+//var btnLogin=document.getElementById('btnLogin');
+var btnLogout=document.getElementById('btnLogout');
+
+$('#btnLogin').on("click",function(el){
+  el.preventDefault();
+  firebase.auth().signInAnonymously().catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // ...
   });
 });
