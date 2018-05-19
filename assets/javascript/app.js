@@ -15,6 +15,7 @@
 //TODO: create rock paper scissors game
 //TODO: set database
 //TODO: get value from database
+$('#btnLogout').hide();
 
 var database = firebase.database();
 
@@ -22,12 +23,81 @@ var connectionsRef = database.ref("/connections");
 
 var connectedRef = database.ref(".info/connected");
 
+var loggedUserInfo=database.ref("/users");
+//var childUserInfo=loggedUserInfo.child('/name')
+
+
+
+// var auth = firebase.auth();
+// auth.signInAnonymously();//will return a promise
+// auth.signOut();
+// auth.onAuthStateChange(user);
+var askname;
+//click login event listener
+$('#btnLogin').on("click",function(el){
+  el.preventDefault();
+  askname=prompt("what is your name?");
+  firebase.auth().signInAnonymously().catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // ...
+  });
+
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    console.log(user);
+    var userId=user['uid'];
+    if (user) {
+     $('#btnLogin').hide();
+     $('#btnLogout').show();
+
+  
+
+   loggedUserInfo.set({
+      id: userId,
+      username:askname
+    });
+    chatPart();
+    }
+    else{
+     $('#btnLogout').hide();
+     $('#btnLogin').show();
+    
+      
+    }
+    //   var isAnonymous = user.isAnonymous;
+    //   var uid = user.uid;
+    //   // ...
+    // } else {
+    //   // User is signed out.
+    //   // ...
+    // }
+    // ...
+  });
+ 
+});
+
+//click logout event listener
+$('#btnLogout').on("click",function(el){
+  el.preventDefault();
+  firebase.auth().signOut();
+ 
+});
+
+var testUser={};
+
+
+
+
+
 connectedRef.on("value", function(snap) {
   // If they are connected..
   console.log(snap.val());
   if (snap.val()) {
     // Add user to the connections list.
     var con = connectionsRef.push(true);
+
     // Remove user from the connection list when they disconnect.
     con.onDisconnect().remove();
   }
@@ -40,9 +110,16 @@ connectionsRef.on("value", function(snap) {
   console.log(snap.numChildren());
 });
 
+
+
+
+
+
+
+
 //  At the page load and subsequent value changes, get a snapshot of the stored data.
 // This function allows you to update your page in real-time when the firebase database changes.
-database.ref().on("child_added", function (childSnapshot, prevChildKey) {//gettings value to append to html
+loggedUserInfo.on("child_added", function (childSnapshot, prevChildKey) {//gettings value to append to html
 
     // Print the initial data to the console.
     console.log(childSnapshot.val());
@@ -68,6 +145,7 @@ database.ref().on("child_added", function (childSnapshot, prevChildKey) {//getti
     console.log("The read failed: " + errorObject.code);
 });
 
+function chatPart(){
 $("#enterChatText").on("click", function(event) {
   event.preventDefault();
 
@@ -75,27 +153,13 @@ $("#enterChatText").on("click", function(event) {
   text = $("#chatInput").val().trim();
   $("#chatInput").val("");
   // Code for handling the push
-  database.ref().push({
+  
+  loggedUserInfo.push({
     text: text,
     dateAdded: firebase.database.ServerValue.TIMESTAMP
   });
 });
-
-// var auth = firebase.auth();
-// auth.signInAnonymously();//will return a promise
-// auth.signOut();
-// auth.onAuthStateChange(user);
+}
 
 
-//var btnLogin=document.getElementById('btnLogin');
-var btnLogout=document.getElementById('btnLogout');
 
-$('#btnLogin').on("click",function(el){
-  el.preventDefault();
-  firebase.auth().signInAnonymously().catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // ...
-  });
-});
