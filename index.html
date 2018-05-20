@@ -19,13 +19,14 @@
 
 <body>
     <div class="container mainContainer">
-        <button type="button" class="btn btn-primary" id="btnLogout">Logout</button>
+        <button type="button" class="btn btn-primary hide" id="btnLogout">Logout</button>
         <h1 id="userList"></h1>
         <div id="message">
             <h1>Anonymous Login</h1>
             <p> I know you're there, I just don't know who you are</p>
 
             <button type="button" class="btn btn-primary" id="btnLogin">Login Anonymously</button>
+
         </div>
 
 
@@ -38,25 +39,30 @@
 
                 </tbody>
             </table>
+
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control"  id="chatInput" placeholder="Type here">
+                    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                </div>
+
+                
+            </form>
+            
+
         </div>
+
+        <button type="button" class="btn btn-primary" id="enterChatText">Submit</button>
 
 
     </div>
-    <form>
-        <div class="form-group">
-            <input type="text" class="form-control" id="chatInput" placeholder="Type here">
-            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-        </div>
-
-        <button type="submit" class="btn btn-primary" id="enterChatText">Submit</button>
-    </form>
 
 
 
 
 
 
-    </div>
+
 
 
 

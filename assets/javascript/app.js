@@ -43,23 +43,24 @@ $("#btnLogin").on("click", function(el) {
       var errorMessage = error.message;
       // ...
     });
+  var startChat;
 
   firebase.auth().onAuthStateChanged(function(user) {
     console.log(user);
     var userId = user["uid"];
 
     if (user) {
-      var askname = prompt("what is your name?");
+     var askname = prompt("what is your name?");
       $("#btnLogin").hide();
       $("#btnLogout").show();
-      $('.chatArea').show();
-     
+      $(".chatArea").show();
+      startChat = true;
       writeUserData(userId, askname);
-
+  
     } else {
       $("#btnLogout").hide();
       $("#btnLogin").show();
-      $('.chatArea').hide();
+      $(".chatArea").hide();
     }
     //   var isAnonymous = user.isAnonymous;
     //   var uid = user.uid;
@@ -98,32 +99,38 @@ function writeUserData(userId, askname) {
     .ref("users/" + askname)
     .set({
       userid: userId,
+      text:""
     });
 }
+
+function updatedata(chattext) {
+  database.ref("users/"+chattext).set({
+    text:chattext
+  });
+}
+
 //click logout event listener
 $("#btnLogout").on("click", function(el) {
   el.preventDefault();
+  el.stopPropagation();
+
+  startChat = false;
   firebase.auth().signOut();
   $("#btnLogin").show();
   $("#btnLogout").hide();
-  $('.chatArea').show();
+  $(".chatArea").hide();
 });
 
 var testUser = {};
 
 //  At the page load and subsequent value changes, get a snapshot of the stored data.
 // This function allows you to update your page in real-time when the firebase database changes.
-database.ref().on("child_added",function(childSnapshot, prevChildKey) {
+database.ref().on("value",function(childSnapshot) {
     //gettings value to append to html
-    // Print the initial data to the console.
-    var test=childSnapshot.val();
-    test2=Object.keys(test);
-    console.log(test2[0]);
-    console.log(childSnapshot.val());
-
     // Log the value of the various properties
-    var userText = childSnapshot.val().text;
-
+    var userText1 = childSnapshot.val().chatlog;
+    userText=userText1['chat'];
+   
     var userTd = $('<td id="name-display">').text(userText);
 
     //TODO::Same thing for each td
@@ -145,20 +152,18 @@ database.ref().on("child_added",function(childSnapshot, prevChildKey) {
 
 
 
-function chatPart() {
-  $("#enterChatText").on("click", function(event) {
-    event.preventDefault();
 
-    // Grabbed values from text boxes
-    text = $("#chatInput")
-      .val()
-      .trim();
-    $("#chatInput").val("");
-    // Code for handling the push
+$("#enterChatText").on("click", function(event) {
 
-    loggedUserInfo.push({
-      text: text,
-      dateAdded: firebase.database.ServerValue.TIMESTAMP
+  // Grabbed values from text boxes
+    var text = $("#chatInput")
+    .val()
+    .trim();
+    
+    firebase.database().ref("chatlog/").set({
+      chat: text,
     });
-  });
-}
+});
+
+
+

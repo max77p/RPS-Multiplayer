@@ -6,9 +6,12 @@
 
 .chatArea{
     overflow:scroll;
-    max-height:10em;
+    max-height:20em;
 }
 #message{
     border:1px solid blue;
 }
 
+#name-display{
+    color:black;
+}
