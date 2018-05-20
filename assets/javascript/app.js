@@ -15,6 +15,7 @@ firebase.initializeApp(config);
 //TODO: set database
 //TODO: get value from database
 $("#btnLogout").hide();
+$(".chatArea").hide();
 
 var database = firebase.database();
 
@@ -51,7 +52,7 @@ $("#btnLogin").on("click", function(el) {
       var askname = prompt("what is your name?");
       $("#btnLogin").hide();
       $("#btnLogout").show();
-
+      $('.chatArea').show();
       // loggedUserInfo.push({
       //   id: userId,
       //   username: askname
@@ -114,11 +115,12 @@ var testUser = {};
 
 //  At the page load and subsequent value changes, get a snapshot of the stored data.
 // This function allows you to update your page in real-time when the firebase database changes.
-database.ref().on(
-  "child_added",
-  function(childSnapshot, prevChildKey) {
+database.ref().on("child_added",function(childSnapshot, prevChildKey) {
     //gettings value to append to html
     // Print the initial data to the console.
+    var test=childSnapshot.val();
+    test2=Object.keys(test);
+    console.log(test2[0]);
     console.log(childSnapshot.val());
 
     // Log the value of the various properties
@@ -142,6 +144,8 @@ database.ref().on(
     console.log("The read failed: " + errorObject.code);
   }
 );
+
+
 
 function chatPart() {
   $("#enterChatText").on("click", function(event) {
