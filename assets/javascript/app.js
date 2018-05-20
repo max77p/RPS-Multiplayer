@@ -53,16 +53,13 @@ $("#btnLogin").on("click", function(el) {
       $("#btnLogin").hide();
       $("#btnLogout").show();
       $('.chatArea').show();
-      // loggedUserInfo.push({
-      //   id: userId,
-      //   username: askname
-      // });
+     
       writeUserData(userId, askname);
 
-      //chatPart();
     } else {
       $("#btnLogout").hide();
       $("#btnLogin").show();
+      $('.chatArea').hide();
     }
     //   var isAnonymous = user.isAnonymous;
     //   var uid = user.uid;
@@ -109,6 +106,7 @@ $("#btnLogout").on("click", function(el) {
   firebase.auth().signOut();
   $("#btnLogin").show();
   $("#btnLogout").hide();
+  $('.chatArea').show();
 });
 
 var testUser = {};
