@@ -30,45 +30,49 @@ var connectedRef = database.ref(".info/connected");
 // auth.onAuthStateChange(user);
 
 //click login event listener
-$("#btnLogin").on("click", function(el) {
+$("#btnLogin").on("click", function (el) {
   el.preventDefault();
   el.stopPropagation();
 
-  firebase
-    .auth()
-    .signInAnonymously()
-    .catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // ...
-    });
-
-
-  firebase.auth().onAuthStateChanged(function(user) {
-    console.log(user);
-    var userId = user["uid"];
-
-    if (user) {
-      var isAnonymous = user.isAnonymous;
-      var uid = user.uid;
-      console.log(isAnonymous);
-      console.log(uid);
-      //var askname = prompt("what is your name?");
-      $("#btnLogin").hide();
-      $("#btnLogout").show();
-      $(".chatArea").show();
-      startChat = true;
-      writeUserData(userId, isAnonymous);
-    } else {
-      $("#btnLogout").hide();
-      $("#btnLogin").show();
-      $(".chatArea").hide();
-    }
+  firebase.auth().signInAnonymously().catch(function (error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // ...
   });
 });
+var userIdArr = [];
+firebase.auth().onAuthStateChanged(function (user) {
+  console.log(user);
+  var userId = user["uid"];
+  if (user) {
+    var isAnonymous = user.isAnonymous;
+    var uid = user.uid;
+    userIdArr.push(uid);
+    console.log(isAnonymous);
+    console.log(uid);
+    //var askname = prompt("what is your name?");
+    $("#btnLogin").hide();
+    $("#btnLogout").show();
+    $(".chatArea").show();
+    startChat = true;
+    //writeUserData(userId, isAnonymous);
+  } else {
+    $("#btnLogout").hide();
+    $("#btnLogin").show();
+    $(".chatArea").hide();
 
-connectedRef.on("value", function(snap) {
+  }
+
+  console.log(userIdArr);
+
+  var user = firebase.auth();
+console.log(user);
+});
+
+
+
+connectedRef.on("value", function (snap) {
   // If they are connected..
   console.log(snap.val());
 
@@ -81,7 +85,7 @@ connectedRef.on("value", function(snap) {
   }
 });
 
-connectionsRef.on("value", function(snap) {
+connectionsRef.on("value", function (snap) {
   // Display the viewer count in the html.
   $("#userList").html("current number of users: " + snap.numChildren());
   // The number of online users is the number of children in the connections list.
@@ -89,23 +93,15 @@ connectionsRef.on("value", function(snap) {
 });
 
 function writeUserData(userId, askname) {
-  firebase
-    .database()
-    .ref("users/" + askname)
-    .set({
-      userid: userId,
-      text: ""
-    });
-}
-
-function updatedata(chattext) {
-  database.ref("users/" + chattext).set({
-    text: chattext
+  firebase.database().ref("users/" + askname).set({
+    userid: userId,
+    text: ""
   });
 }
 
+
 //click logout event listener
-$("#btnLogout").on("click", function(el) {
+$("#btnLogout").on("click", function (el) {
   el.preventDefault();
   //el.stopPropagation();
 
@@ -114,47 +110,42 @@ $("#btnLogout").on("click", function(el) {
   $("#btnLogin").show();
   $("#btnLogout").hide();
   $(".chatArea").hide();
+
 });
 
 var testUser = {};
 
 //  At the page load and subsequent value changes, get a snapshot of the stored data.
 // This function allows you to update your page in real-time when the firebase database changes.
-database.ref().on("value",function(childSnapshot) {
-    //gettings value to append to html
-    // Log the value of the various properties
-    var userText1 = childSnapshot.val();
-    userText = userText1["chat"];
+database.ref().on("value", function (childSnapshot) {
+  //gettings value to append to html
+  // Log the value of the various properties
+  var userText1 = childSnapshot.val().chatlog;
+  console.log(userText1);
+  userText = userText1["chat"];
 
-    var userTd = $('<td id="name-display">').text(userText);
+  var userTd = $('<td id="name-display">').text(userText);
 
-    //TODO::Same thing for each td
-    var tRow = $("<tr>");
-    tRow.append(userTd);
-    //TODO::Add each other td
+  //TODO::Same thing for each td
+  var tRow = $("<tr>");
+  tRow.append(userTd);
+  //TODO::Add each other td
 
-    // Change the HTML
-    $(".tbody")
-      .first()
-      .append(tRow);
+  // Change the HTML
+  $(".tbody").first().append(tRow);
 
-    // If any errors are experienced, log them to console.
-  },
-  function(errorObject) {
+  // If any errors are experienced, log them to console.
+},
+  function (errorObject) {
     console.log("The read failed: " + errorObject.code);
   }
 );
 
-// $("#enterChatText").on("click", function(event) {
-//   // Grabbed values from text boxes
-//   var text = $("#chatInput")
-//     .val()
-//     .trim();
+$("#enterChatText").on("click", function (event) {
+  // Grabbed values from text boxes
+  var text = $("#chatInput").val().trim();
 
-//   firebase
-//     .database()
-//     .ref("chatlog/")
-//     .set({
-//       chat: text
-//     });
-// });
+  firebase.database().ref("chatlog").push({
+    chat: text
+  });
+});
