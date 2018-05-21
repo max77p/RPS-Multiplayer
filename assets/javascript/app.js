@@ -56,7 +56,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     $("#btnLogout").show();
     $(".chatArea").show();
     startChat = true;
-    //writeUserData(userId, isAnonymous);
+    writeUserData(userId, isAnonymous);
   } else {
     $("#btnLogout").hide();
     $("#btnLogin").show();
@@ -71,6 +71,16 @@ console.log(user);
 });
 
 
+
+function writeUserData(userId, askname) {
+  var i=1;
+  firebase.database().ref("users/"+ i).set({
+    userid: userId,
+    text: "",
+    anon: askname
+  });
+  i++;
+}
 
 connectedRef.on("value", function (snap) {
   // If they are connected..
@@ -92,12 +102,7 @@ connectionsRef.on("value", function (snap) {
   console.log(snap.numChildren());
 });
 
-function writeUserData(userId, askname) {
-  firebase.database().ref("users/" + askname).set({
-    userid: userId,
-    text: ""
-  });
-}
+
 
 
 //click logout event listener
