@@ -25,29 +25,68 @@ var connectedRef = database.ref(".info/connected");
 var chatLog = database.ref("chatLog");
 
 
+
+
 connectedRef.on("value", function (snap) {
   // If they are connected..
-  console.log(snap.val());
+  console.log(snap);
 
   if (snap.val()) {
     // Add user to the connections list.
-    var con = connectionsRef.push(true);
-
-
+    var con = connectionsRef;
+    //var con = connectionsRef.push(true);
+    addUser(con);
     // Remove user from the connection list when they disconnect.
-    con.onDisconnect().remove();
+    //con.onDisconnect().remove();
   }
+
 });
 
 connectionsRef.on("value", function (snap) {
   // Display the viewer count in the html.
   $("#userList").html("current number of users: " + snap.numChildren());
+  console.log(snap.val());
+
   // The number of online users is the number of children in the connections list.
   console.log(snap.numChildren());
 });
 
+function addUser(el) {
+
+  firebase.auth().signInAnonymously().catch(function (error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // ...
+  });
+
+  firebase.auth().onAuthStateChanged(function (user) {
+    console.log(user);
+    var userId = user["uid"];
+    console.log(userId);
 
 
+    
+
+    if (user) {
+
+    var userDB = database.ref("UserDB");
+    var newUser = userDB.child(userId);
+
+      var isAnonymous = user.isAnonymous;
+      var uid = user.uid;
+      newUser.set({
+        'anon': isAnonymous
+      })
+
+      newUser.onDisconnect().remove();
+    } else {
+      alert("has disconnected");
+    }
+
+  });
+
+};
 
 
 
