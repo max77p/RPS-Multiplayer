@@ -43,33 +43,28 @@ $("#btnLogin").on("click", function(el) {
       var errorMessage = error.message;
       // ...
     });
-  var startChat;
+
 
   firebase.auth().onAuthStateChanged(function(user) {
     console.log(user);
     var userId = user["uid"];
 
     if (user) {
-     var askname = prompt("what is your name?");
+      var isAnonymous = user.isAnonymous;
+      var uid = user.uid;
+      console.log(isAnonymous);
+      console.log(uid);
+      //var askname = prompt("what is your name?");
       $("#btnLogin").hide();
       $("#btnLogout").show();
       $(".chatArea").show();
       startChat = true;
-      writeUserData(userId, askname);
-  
+      writeUserData(userId, isAnonymous);
     } else {
       $("#btnLogout").hide();
       $("#btnLogin").show();
       $(".chatArea").hide();
     }
-    //   var isAnonymous = user.isAnonymous;
-    //   var uid = user.uid;
-    //   // ...
-    // } else {
-    //   // User is signed out.
-    //   // ...
-    // }
-    // ...
   });
 });
 
@@ -99,20 +94,20 @@ function writeUserData(userId, askname) {
     .ref("users/" + askname)
     .set({
       userid: userId,
-      text:""
+      text: ""
     });
 }
 
 function updatedata(chattext) {
-  database.ref("users/"+chattext).set({
-    text:chattext
+  database.ref("users/" + chattext).set({
+    text: chattext
   });
 }
 
 //click logout event listener
 $("#btnLogout").on("click", function(el) {
   el.preventDefault();
-  el.stopPropagation();
+  //el.stopPropagation();
 
   startChat = false;
   firebase.auth().signOut();
@@ -128,9 +123,9 @@ var testUser = {};
 database.ref().on("value",function(childSnapshot) {
     //gettings value to append to html
     // Log the value of the various properties
-    var userText1 = childSnapshot.val().chatlog;
-    userText=userText1['chat'];
-   
+    var userText1 = childSnapshot.val();
+    userText = userText1["chat"];
+
     var userTd = $('<td id="name-display">').text(userText);
 
     //TODO::Same thing for each td
@@ -150,20 +145,16 @@ database.ref().on("value",function(childSnapshot) {
   }
 );
 
+// $("#enterChatText").on("click", function(event) {
+//   // Grabbed values from text boxes
+//   var text = $("#chatInput")
+//     .val()
+//     .trim();
 
-
-
-$("#enterChatText").on("click", function(event) {
-
-  // Grabbed values from text boxes
-    var text = $("#chatInput")
-    .val()
-    .trim();
-    
-    firebase.database().ref("chatlog/").set({
-      chat: text,
-    });
-});
-
-
-
+//   firebase
+//     .database()
+//     .ref("chatlog/")
+//     .set({
+//       chat: text
+//     });
+// });
