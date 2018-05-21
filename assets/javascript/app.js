@@ -148,7 +148,6 @@ function inputtext(uid, anon) {
   })
 
 
-
 }
 
 
