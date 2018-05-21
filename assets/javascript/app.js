@@ -24,7 +24,7 @@ var connectedRef = database.ref(".info/connected");
 
 var chatLog = database.ref("chatLog");
 
-
+var userDB = database.ref("UserDB");
 
 
 connectedRef.on("value", function (snap) {
@@ -34,10 +34,11 @@ connectedRef.on("value", function (snap) {
   if (snap.val()) {
     // Add user to the connections list.
     var con = connectionsRef;
-    //var con = connectionsRef.push(true);
+    console.log(con);
+    var con = connectionsRef.push(true);
     addUser(con);
     // Remove user from the connection list when they disconnect.
-    //con.onDisconnect().remove();
+    con.onDisconnect().remove();
   }
 
 });
@@ -65,18 +66,16 @@ function addUser(el) {
     var userId = user["uid"];
     console.log(userId);
 
-
-    
-
     if (user) {
 
-    var userDB = database.ref("UserDB");
-    var newUser = userDB.child(userId);
+      var newUser = userDB.child(userId);
 
       var isAnonymous = user.isAnonymous;
       var uid = user.uid;
+
       newUser.set({
-        'anon': isAnonymous
+        'anon': isAnonymous,
+        "dateAdded": firebase.database.ServerValue.TIMESTAMP
       })
 
       newUser.onDisconnect().remove();
