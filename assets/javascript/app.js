@@ -1,13 +1,12 @@
-// Initialize Firebase
 
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyAi8BmcQ15o7e9fptcEZYjwx-knllryTnc",
-  authDomain: "rpsgame-98ea6.firebaseapp.com",
-  databaseURL: "https://rpsgame-98ea6.firebaseio.com",
-  projectId: "rpsgame-98ea6",
-  storageBucket: "rpsgame-98ea6.appspot.com",
-  messagingSenderId: "505248843531"
+  apiKey: "AIzaSyCoJ_guBP7y6kdrfZ6ajotd8oufsb5SGf4",
+  authDomain: "rpsgame-bdaf8.firebaseapp.com",
+  databaseURL: "https://rpsgame-bdaf8.firebaseio.com",
+  projectId: "rpsgame-bdaf8",
+  storageBucket: "rpsgame-bdaf8.appspot.com",
+  messagingSenderId: "882257568229"
 };
 firebase.initializeApp(config);
 
@@ -22,9 +21,9 @@ var connectionsRef = database.ref("/connections");
 
 var connectedRef = database.ref(".info/connected");
 
-var chatLog = database.ref("chatLog");
+var chatLog = database.ref("/chatLog");
 
-var userDB = database.ref("UserDB");
+var userDB = database.ref("/UserDB");
 
 
 connectedRef.on("value", function (snap) {
@@ -34,7 +33,7 @@ connectedRef.on("value", function (snap) {
   if (snap.val()) {
     // Add user to the connections list.
     var con = connectionsRef;
-   
+
     var con = connectionsRef.push(true);
     addUser(con);
     // Remove user from the connection list when they disconnect.
@@ -68,19 +67,19 @@ function addUser(el) {
 
     if (user) {
 
-      var newUser = userDB.child(userId);
-
       var isAnonymous = user.isAnonymous;
       var uid = user.uid;
+      allowUser(uid, isAnonymous);
+      //console.log(userstext);
+      // newUser.set({
+      //   'anon': isAnonymous,
+      //   "dateAdded": firebase.database.ServerValue.TIMESTAMP
+      // })
+      userDB.child(uid).onDisconnect().remove();
 
-      newUser.set({
-        'anon': isAnonymous,
-        "dateAdded": firebase.database.ServerValue.TIMESTAMP
-      })
-
-      newUser.onDisconnect().remove();
     } else {
-     //disconnected
+      //disconnected
+      allowUser.onDisconnect().remove();
     }
 
   });
@@ -88,30 +87,28 @@ function addUser(el) {
 };
 
 
-
 //  At the page load and subsequent value changes, get a snapshot of the stored data.
 // This function allows you to update your page in real-time when the firebase database changes.
-chatLog.on("child_added", function (snapshot) {
+database.ref(chatLog).orderByChild('chat').on("child_added", function (snapshot) {
   //gettings value to append to html
   // Log the value of the various properties
+  console.log(snapshot.val());
 
-  snapshot.forEach(function (textSnap) {
-    console.log(textSnap.val());
 
-    var userText = textSnap.val();
-    console.log(userText);
-    //userText = userText1["chat"];
 
-    var userTd = $('<td id="name-display">').text(userText);
+  var chattext = snapshot.val().chat;
 
-    //TODO::Same thing for each td
-    var tRow = $("<tr>");
-    tRow.append(userTd);
-    //TODO::Add each other td
 
-    // Change the HTML
-    $(".tbody").first().append(tRow);
-  });
+
+  var userTd = $('<td id="name-display">').text(chattext);
+
+  //TODO::Same thing for each td
+  var tRow = $("<tr>");
+  tRow.append(userTd);
+  //TODO::Add each other td
+
+  // Change the HTML
+  $(".tbody").first().append(tRow);
 
 },// If any errors are experienced, log them to console.
   function (errorObject) {
@@ -121,14 +118,39 @@ chatLog.on("child_added", function (snapshot) {
 
 
 
-$("#enterChatText").on("click", function (event) {
-  // Grabbed values from text boxes
-  var text = $("#chatInput").val().trim();
 
-  chatLog.push({
-    chat: text
+function allowUser(uid, anon) {
+  $("form").keypress(function (event) {
+    // Grabbed values from text boxes
+    if (event.which === 13) {
+      event.preventDefault();
+      inputtext(uid, anon);
+    }
   });
-});
+
+
+}
+
+function inputtext(uid, anon) {
+  var text = $("#chatInput").val();
+  var newUser = userDB.child(uid);
+  var chatChild = chatLog.child(uid);
+
+
+  newUser.set({
+    'anon': anon,
+    "dateAdded": firebase.database.ServerValue.TIMESTAMP
+  })
+
+  // newUser.child("chat/").push(text);
+  chatLog.push({
+    "chat": text
+  })
+
+
+
+}
+
 
 
 
