@@ -34,7 +34,7 @@ connectedRef.on("value", function (snap) {
   if (snap.val()) {
     // Add user to the connections list.
     var con = connectionsRef;
-    console.log(con);
+   
     var con = connectionsRef.push(true);
     addUser(con);
     // Remove user from the connection list when they disconnect.
@@ -80,7 +80,7 @@ function addUser(el) {
 
       newUser.onDisconnect().remove();
     } else {
-      alert("has disconnected");
+     //disconnected
     }
 
   });
