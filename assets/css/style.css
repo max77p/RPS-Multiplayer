@@ -5,8 +5,12 @@
 }
 
 .chatArea{
-    overflow:scroll;
-    max-height:20em;
+    display:flex;
+   flex-direction:column-reverse;
+   overflow:scroll;
+    height:10em;
+    padding:2em;
+    border:1px solid black;
 }
 #message{
     border:1px solid blue;

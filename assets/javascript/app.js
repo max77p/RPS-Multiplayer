@@ -94,22 +94,11 @@ database.ref(chatLog).orderByChild('chat').on("child_added", function (snapshot)
   // Log the value of the various properties
   console.log(snapshot.val());
 
-
-
   var chattext = snapshot.val().chat;
-
-
-
-  var userTd = $('<td id="name-display">').text(chattext);
-
-  //TODO::Same thing for each td
-  var tRow = $("<tr>");
-  tRow.append(userTd);
-  //TODO::Add each other td
-
+var newLine=$("<br>");
   // Change the HTML
-  $(".tbody").first().append(tRow);
-
+  $(".chatArea").append(newLine).append(chattext);
+  $("#chatInput").val("");
 },// If any errors are experienced, log them to console.
   function (errorObject) {
     console.log("The read failed: " + errorObject.code);
