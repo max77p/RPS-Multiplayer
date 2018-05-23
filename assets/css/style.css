@@ -19,3 +19,9 @@
 #name-display{
     color:black;
 }
+
+.innerBox{
+    border:1px solid black;
+ 
+    height:10em;
+}

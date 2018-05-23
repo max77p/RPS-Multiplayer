@@ -70,11 +70,7 @@ function addUser(el) {
       var isAnonymous = user.isAnonymous;
       var uid = user.uid;
       allowUser(uid, isAnonymous);
-      //console.log(userstext);
-      // newUser.set({
-      //   'anon': isAnonymous,
-      //   "dateAdded": firebase.database.ServerValue.TIMESTAMP
-      // })
+      
       userDB.child(uid).onDisconnect().remove();
 
     } else {
@@ -95,7 +91,7 @@ database.ref(chatLog).orderByChild('chat').on("child_added", function (snapshot)
   console.log(snapshot.val());
 
   var chattext = snapshot.val().chat;
-var newLine=$("<br>");
+  var newLine = $("<br>");
   // Change the HTML
   $(".chatArea").append(newLine).append(chattext);
   $("#chatInput").val("");
@@ -133,7 +129,8 @@ function inputtext(uid, anon) {
 
   // newUser.child("chat/").push(text);
   chatLog.push({
-    "chat": text
+    "chat": text,
+    "userid":uid
   })
 
 
@@ -144,60 +141,3 @@ function inputtext(uid, anon) {
 
 
 
-
-//click logout event listener
-// $("#btnLogout").on("click", function (el) {
-//   el.preventDefault();
-//   //el.stopPropagation();
-
-
-//   startChat = false;
-//   firebase.auth().signOut();
-//   $("#btnLogin").show();
-//   $("#btnLogout").hide();
-//   $(".chatArea").hide();
-
-// });
-//click login event listener
-// $("#btnLogin").on("click", function (el) {
-//   el.preventDefault();
-//   el.stopPropagation();
-
-//   firebase.auth().signInAnonymously().catch(function (error) {
-//     // Handle Errors here.
-//     var errorCode = error.code;
-//     var errorMessage = error.message;
-//     // ...
-//   });
-// });
-// var userIdArr = [];
-// firebase.auth().onAuthStateChanged(function (user) {
-//   console.log(user);
-//   var userId = user["uid"];
-//   if (user) {
-//     var isAnonymous = user.isAnonymous;
-//     var uid = user.uid;
-//     userIdArr.push(uid);
-//     console.log(isAnonymous);
-//     console.log(uid);
-
-
-//     //var askname = prompt("what is your name?");
-//     $("#btnLogin").hide();
-//     $("#btnLogout").show();
-//     $(".chatArea").show();
-//     startChat = true;
-//     writeUserData(userId, isAnonymous);
-//   } else {
-//     user.onDisconnect().remove();
-//     $("#btnLogout").hide();
-//     $("#btnLogin").show();
-//     $(".chatArea").hide();
-
-//   }
-
-//   //console.log(userIdArr);
-
-
-//   //console.log(user);
-// });
