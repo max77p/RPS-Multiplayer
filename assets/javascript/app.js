@@ -10,9 +10,7 @@ var config = {
 };
 firebase.initializeApp(config);
 
-//TODO: create rock paper scissors game
-//TODO: set database
-//TODO: get value from database
+
 
 
 var database = firebase.database();
@@ -61,16 +59,15 @@ function addUser(el) {
   });
 
   firebase.auth().onAuthStateChanged(function (user) {
-    console.log(user);
+    //console.log(user);
     var userId = user["uid"];
-    console.log(userId);
+    //console.log(userId);
 
     if (user) {
-
       var isAnonymous = user.isAnonymous;
       var uid = user.uid;
       allowUser(uid, isAnonymous);
-      
+
       userDB.child(uid).onDisconnect().remove();
 
     } else {
@@ -81,6 +78,52 @@ function addUser(el) {
   });
 
 };
+
+var prevUser;
+var alreadyClicked;
+
+$('.playClick1').on("click", function () {//button 1 click event
+  var userplay = firebase.auth().currentUser;
+if(alreadyClicked){
+  alert("already clicked");
+  return;
+}
+  if (userplay) {
+    var userclicked = userplay.uid;//get unique id from user who clicked
+    console.log(userclicked);
+    $('.playClick1').html(userclicked);
+    alreadyClicked=true;//lock button so other users can't click
+
+ 
+  } else {
+    // No user is signed in.
+  }
+
+});
+
+var alreadyClicked2;
+$('.playClick2').on("click", function () {//button 1 click event
+  var userplay = firebase.auth().currentUser;
+if(alreadyClicked2){
+  alert("already clicked");
+  return;
+}
+  if (userplay) {
+    var userclicked = userplay.uid;//get unique id from user who clicked
+    console.log(userclicked);
+    $('.playClick2').html(userclicked);
+    alreadyClicked2=true;//lock button so other users can't click
+  } else {
+    // No user is signed in.
+  }
+
+});
+
+function registerUser(userid) {
+  
+}
+
+
 
 
 //  At the page load and subsequent value changes, get a snapshot of the stored data.
@@ -130,7 +173,7 @@ function inputtext(uid, anon) {
   // newUser.child("chat/").push(text);
   chatLog.push({
     "chat": text,
-    "userid":uid
+    "userid": uid
   })
 
 
