@@ -38,7 +38,7 @@ connectedRef.on("value", function (snap) {
     var con = connectionsRef;
 
     var con = connectionsRef.push(true);
-    addUser(con);
+    //addUser(con);
     // Remove user from the connection list when they disconnect.
     con.onDisconnect().remove();
   }
@@ -54,35 +54,53 @@ connectionsRef.on("value", function (snap) {
   console.log(snap.numChildren());
 });
 
-function addUser(el) {
 
-  firebase.auth().signInAnonymously().catch(function (error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // ...
+
+firebase.auth().signInAnonymously().catch(function (error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // ...
+});
+
+
+function createUser() {
+  
+}
+
+firebase.auth().onAuthStateChanged(function (user) {
+  console.log(user);
+
+  var name=prompt("what is your name?");
+  var user = firebase.auth().currentUser;
+
+  user.updateProfile({
+    displayName: name
+  }).then(function () {
+    // Update successful.
+  }).catch(function (error) {
+    // An error happened.
   });
 
-  firebase.auth().onAuthStateChanged(function (user) {
-    //console.log(user);
-    var userId = user["uid"];
-    //console.log(userId);
+  var userId = user["uid"];
+  
 
-    if (user) {
-      var isAnonymous = user.isAnonymous;
-      var uid = user.uid;
-      allowUser(uid, isAnonymous);
+  if (user) {
+    var isAnonymous = user.isAnonymous;
+    var uid = user.uid;
+    var dispName=user.displayName;
+    allowUser(uid, isAnonymous,dispName);
 
-      userDB.child(uid).onDisconnect().remove();
+    userDB.child(uid).onDisconnect().remove();
 
-    } else {
-      //disconnected
-      allowUser.onDisconnect().remove();
-    }
+  } else {
+    //disconnected
+    allowUser.onDisconnect().remove();
+  }
 
-  });
+});
 
-};
+
 
 var prevUser;
 var alreadyClicked;
@@ -95,7 +113,7 @@ $('.playClick1').on("click", function () {//button 1 click event
     return;
   }
   if (userplay) {
-    var userclicked = userplay.uid;//get unique id from user who clicked
+    var userclicked = userplay.displayName;//get unique id from user who clicked
     console.log(userclicked);
     p1.set({
       "losses": 0,
@@ -119,7 +137,7 @@ $('.playClick2').on("click", function () {//button 2 click event
     return;
   }
   if (userplay) {
-    var userclicked = userplay.uid;//get unique id from user who clicked
+    var userclicked = userplay.displayName;//get unique id from user who clicked
     console.log(userclicked);
     p2.set({
       "losses": 0,
@@ -147,10 +165,10 @@ p2.on("value", function (snapshot) {//player two to database
 p1.on("value", function (snapshot) {//player one to database
   var test = snapshot.val().name;
   console.log(test);
-  if(test){
-  $('.playClick1').html(test);
-  $('.playClick1').attr("data-name", test);
-  alreadyClicked = true;
+  if (test) {
+    $('.playClick1').html(test);
+    $('.playClick1').attr("data-name", test);
+    alreadyClicked = true;
   }
 });
 
@@ -178,19 +196,19 @@ database.ref(chatLog).orderByChild('chat').on("child_added", function (snapshot)
 
 
 
-function allowUser(uid, anon) {
+function allowUser(uid, anon,name) {
   $("form").keypress(function (event) {
     // Grabbed values from text boxes
     if (event.which === 13) {
       event.preventDefault();
-      inputtext(uid, anon);
+      inputtext(uid, anon,name);
     }
   });
 
 
 }
 
-function inputtext(uid, anon) {
+function inputtext(uid, anon,name) {
   var text = $("#chatInput").val();
   var newUser = userDB.child(uid);
   var chatChild = chatLog.child(uid);
@@ -198,6 +216,7 @@ function inputtext(uid, anon) {
 
   newUser.set({
     'anon': anon,
+    "name":name,
     "dateAdded": firebase.database.ServerValue.TIMESTAMP
   })
 
