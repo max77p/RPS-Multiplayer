@@ -70,8 +70,10 @@ function createUser() {
 
 firebase.auth().onAuthStateChanged(function (user) {
   console.log(user);
-
-  var name=prompt("what is your name?");
+  var name;
+do{
+  name=prompt("what is your name?");
+}while(!name);
   var user = firebase.auth().currentUser;
 
   user.updateProfile({
@@ -183,9 +185,10 @@ database.ref(chatLog).orderByChild('chat').on("child_added", function (snapshot)
   console.log(snapshot.val());
 
   var chattext = snapshot.val().chat;
+  var chatname=snapshot.val().name;
   var newLine = $("<br>");
   // Change the HTML
-  $(".chatArea").append(newLine).append(chattext);
+  $(".chatArea").append(newLine).append(chatname+" : "+chattext);
   $("#chatInput").val("");
 },// If any errors are experienced, log them to console.
   function (errorObject) {
@@ -220,9 +223,10 @@ function inputtext(uid, anon,name) {
     "dateAdded": firebase.database.ServerValue.TIMESTAMP
   })
 
-  // newUser.child("chat/").push(text);
+
   chatLog.push({
     "chat": text,
+    "name":name,
     "userid": uid
   })
 
