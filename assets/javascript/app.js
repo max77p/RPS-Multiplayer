@@ -126,17 +126,21 @@ $('.playClick2').on("click", function () {//button 2 click event
       "name":userclicked,
       "wins":0
    })
-    $('.playClick2').html(userclicked);
-    alreadyClicked2 = true;//lock button so other users can't click
+ 
   } else {
     // No user is signed in.
   }
 
 });
 
-function registerUser(userid) {
 
-}
+players.on("child_added",function(snapshot){//player two to database
+var test=snapshot.val();
+console.log(test.name);
+$('.playClick2').html(test.name);
+$('.playClick2').attr("data-name",test.name);
+alreadyClicked2 = true;
+});
 
 
 
