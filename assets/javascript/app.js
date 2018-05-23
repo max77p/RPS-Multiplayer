@@ -25,8 +25,8 @@ var userDB = database.ref("/UserDB");
 
 var players = database.ref("/players");
 
-var p1=players.child("1");
-var p2=players.child("2");
+var p1 = players.child("1");
+var p2 = players.child("2");
 
 
 connectedRef.on("value", function (snap) {
@@ -97,13 +97,13 @@ $('.playClick1').on("click", function () {//button 1 click event
   if (userplay) {
     var userclicked = userplay.uid;//get unique id from user who clicked
     console.log(userclicked);
-  p1.set({
-      "losses":0,
-      "name":userclicked,
-      "wins":0
-   })
-    $('.playClick1').html(userclicked);
-    alreadyClicked = true;//lock button so other users can't click
+    p1.set({
+      "losses": 0,
+      "name": userclicked,
+      "wins": 0
+    })
+
+
   } else {
     // No user is signed in.
   }
@@ -122,11 +122,11 @@ $('.playClick2').on("click", function () {//button 2 click event
     var userclicked = userplay.uid;//get unique id from user who clicked
     console.log(userclicked);
     p2.set({
-      "losses":0,
-      "name":userclicked,
-      "wins":0
-   })
- 
+      "losses": 0,
+      "name": userclicked,
+      "wins": 0
+    })
+
   } else {
     // No user is signed in.
   }
@@ -134,12 +134,24 @@ $('.playClick2').on("click", function () {//button 2 click event
 });
 
 
-players.on("child_added",function(snapshot){//player two to database
-var test=snapshot.val();
-console.log(test.name);
-$('.playClick2').html(test.name);
-$('.playClick2').attr("data-name",test.name);
-alreadyClicked2 = true;
+p2.on("value", function (snapshot) {//player two to database
+  var test = snapshot.val().name;
+  console.log(test);
+  if (test) {
+    $('.playClick2').html(test);
+    $('.playClick2').attr("data-name", test);
+    alreadyClicked2 = true;
+  }
+});
+
+p1.on("value", function (snapshot) {//player one to database
+  var test = snapshot.val().name;
+  console.log(test);
+  if(test){
+  $('.playClick1').html(test);
+  $('.playClick1').attr("data-name", test);
+  alreadyClicked = true;
+  }
 });
 
 
