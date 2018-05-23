@@ -23,6 +23,11 @@ var chatLog = database.ref("/chatLog");
 
 var userDB = database.ref("/UserDB");
 
+var players = database.ref("/players");
+
+var p1=players.child("1");
+var p2=players.child("2");
+
 
 connectedRef.on("value", function (snap) {
   // If they are connected..
@@ -84,35 +89,45 @@ var alreadyClicked;
 
 $('.playClick1').on("click", function () {//button 1 click event
   var userplay = firebase.auth().currentUser;
-if(alreadyClicked){
-  alert("already clicked");
-  return;
-}
+
+  if (alreadyClicked) {
+    alert("already clicked");
+    return;
+  }
   if (userplay) {
     var userclicked = userplay.uid;//get unique id from user who clicked
     console.log(userclicked);
+  p1.set({
+      "losses":0,
+      "name":userclicked,
+      "wins":0
+   })
     $('.playClick1').html(userclicked);
-    alreadyClicked=true;//lock button so other users can't click
-
- 
+    alreadyClicked = true;//lock button so other users can't click
   } else {
     // No user is signed in.
   }
 
 });
 
+
 var alreadyClicked2;
-$('.playClick2').on("click", function () {//button 1 click event
+$('.playClick2').on("click", function () {//button 2 click event
   var userplay = firebase.auth().currentUser;
-if(alreadyClicked2){
-  alert("already clicked");
-  return;
-}
+  if (alreadyClicked2) {
+    alert("already clicked");
+    return;
+  }
   if (userplay) {
     var userclicked = userplay.uid;//get unique id from user who clicked
     console.log(userclicked);
+    p2.set({
+      "losses":0,
+      "name":userclicked,
+      "wins":0
+   })
     $('.playClick2').html(userclicked);
-    alreadyClicked2=true;//lock button so other users can't click
+    alreadyClicked2 = true;//lock button so other users can't click
   } else {
     // No user is signed in.
   }
@@ -120,7 +135,7 @@ if(alreadyClicked2){
 });
 
 function registerUser(userid) {
-  
+
 }
 
 
