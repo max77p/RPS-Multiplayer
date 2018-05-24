@@ -31,7 +31,7 @@ var p2 = players.child("2");
 
 connectedRef.on("value", function (snap) {
   // If they are connected..
-  console.log(snap);
+  //console.log(snap);
 
   if (snap.val()) {
     // Add user to the connections list.
@@ -64,34 +64,14 @@ firebase.auth().signInAnonymously().catch(function (error) {
 });
 
 
-function createUser() {
-  
-}
-
 firebase.auth().onAuthStateChanged(function (user) {
   console.log(user);
-  var name;
-do{
-  name=prompt("what is your name?");
-}while(!name);
-  var user = firebase.auth().currentUser;
-
-  user.updateProfile({
-    displayName: name
-  }).then(function () {
-    // Update successful.
-  }).catch(function (error) {
-    // An error happened.
-  });
-
-  var userId = user["uid"];
-  
 
   if (user) {
     var isAnonymous = user.isAnonymous;
     var uid = user.uid;
-    var dispName=user.displayName;
-    allowUser(uid, isAnonymous,dispName);
+
+    allowUser(uid, isAnonymous);
 
     userDB.child(uid).onDisconnect().remove();
 
@@ -99,23 +79,44 @@ do{
     //disconnected
     allowUser.onDisconnect().remove();
   }
-
 });
 
 
+$(".nameForm").keypress(function (event) {
+  // Grabbed values from text boxes
+  if (event.which === 13) {
+    event.preventDefault();
+    getPlayer();
+  }
+});
+
+
+function getPlayer() {
+  var user = firebase.auth().currentUser;
+  var getname = $('#nameInput').val();
+  user.updateProfile({
+    displayName: getname
+  }).then(function () {
+    // Update successful.
+  }).catch(function (error) {
+    // An error happened.
+  });
+}
 
 var prevUser;
 var alreadyClicked;
 
-$('.playClick1').on("click", function () {//button 1 click event
+$('.playClick1').on("click", function (e) {//button 1 click event
+  e.preventDefault();
   var userplay = firebase.auth().currentUser;
+  console.log(userplay);
 
   if (alreadyClicked) {
     alert("already clicked");
     return;
   }
   if (userplay) {
-    var userclicked = userplay.displayName;//get unique id from user who clicked
+    var userclicked = userplay.uid;//get unique id from user who clicked
     console.log(userclicked);
     p1.set({
       "losses": 0,
@@ -132,14 +133,15 @@ $('.playClick1').on("click", function () {//button 1 click event
 
 
 var alreadyClicked2;
-$('.playClick2').on("click", function () {//button 2 click event
+$('.playClick2').on("click", function (e) {//button 2 click event
+  e.preventDefault();
   var userplay = firebase.auth().currentUser;
   if (alreadyClicked2) {
     alert("already clicked");
     return;
   }
   if (userplay) {
-    var userclicked = userplay.displayName;//get unique id from user who clicked
+    var userclicked = userplay.uid;//get unique id from user who clicked
     console.log(userclicked);
     p2.set({
       "losses": 0,
@@ -185,10 +187,10 @@ database.ref(chatLog).orderByChild('chat').on("child_added", function (snapshot)
   console.log(snapshot.val());
 
   var chattext = snapshot.val().chat;
-  var chatname=snapshot.val().name;
+  var chatname = snapshot.val().name;
   var newLine = $("<br>");
   // Change the HTML
-  $(".chatArea").append(newLine).append(chatname+" : "+chattext);
+  $(".chatArea").append(newLine).append(chatname + " : " + chattext);
   $("#chatInput").val("");
 },// If any errors are experienced, log them to console.
   function (errorObject) {
@@ -199,37 +201,37 @@ database.ref(chatLog).orderByChild('chat').on("child_added", function (snapshot)
 
 
 
-function allowUser(uid, anon,name) {
-  $("form").keypress(function (event) {
+function allowUser(uid, anon) {
+  $(".chatForm").keypress(function (event) {
     // Grabbed values from text boxes
     if (event.which === 13) {
       event.preventDefault();
-      inputtext(uid, anon,name);
+      inputtext(uid, anon);
     }
   });
 
 
 }
 
-function inputtext(uid, anon,name) {
+function inputtext(uid, anon) {//input chat text to database
   var text = $("#chatInput").val();
   var newUser = userDB.child(uid);
   var chatChild = chatLog.child(uid);
-
+  var user = firebase.auth().currentUser;
+  console.log(user);
 
   newUser.set({
     'anon': anon,
-    "name":name,
+    "name": user.displayName,
     "dateAdded": firebase.database.ServerValue.TIMESTAMP
   })
 
 
   chatLog.push({
     "chat": text,
-    "name":name,
+    "name": user.displayName,
     "userid": uid
   })
-
 
 }
 

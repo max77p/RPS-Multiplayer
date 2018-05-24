@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css" />
     <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
         crossorigin="anonymous">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
 
 </head>
@@ -20,24 +20,32 @@
 <body>
     <div class="container mainContainer">
         <!-- <button type="button" class="btn btn-primary" id="btnLogout">Logout</button> -->
+
         <h1 id="userList"></h1>
 
 
-        <div class="jumbotron">
-            <div class="chatArea">
 
 
-            </div>
+        <div class="chatArea">
 
-            <form>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="chatInput" placeholder="Type here">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-            </form>
+
         </div>
+
+        <form class="chatForm">
+            <div class="form-group">
+                <input type="text" class="form-control" id="chatInput" placeholder="Type here">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+        </form>
+
         <div class="asktoPlay playMsg">
             <h1>who wants to play?</h1>
+            <form class="nameForm">
+                <div class="startForm">
+                    <input type="text" class="form-control" id="nameInput" placeholder="Type here">
+                </div>
+                <button type="submit" class="btn btn-primary startBtn">Press start</button>
+            </form>
         </div>
 
         <div class="row">

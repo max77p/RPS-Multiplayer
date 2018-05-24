@@ -25,3 +25,11 @@
  
     height:10em;
 }
+
+.nameForm{
+max-width:100%;
+}
+
+.startForm{
+    display:inline-block;
+}
