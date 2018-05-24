@@ -82,7 +82,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 
-$(".nameForm").keypress(function (event) {
+$("#nameInput").keypress(function (event) {
   // Grabbed values from text boxes
   if (event.which === 13) {
     event.preventDefault();
@@ -90,17 +90,27 @@ $(".nameForm").keypress(function (event) {
   }
 });
 
+$('.startBtn').on("click", function (e) {
+  e.preventDefault();
+  getPlayer();
+})
+
 
 function getPlayer() {
   var user = firebase.auth().currentUser;
   var getname = $('#nameInput').val();
-  user.updateProfile({
-    displayName: getname
-  }).then(function () {
-    // Update successful.
-  }).catch(function (error) {
-    // An error happened.
-  });
+  if (!getname) {
+    alert("please enter a name");
+  }
+  else {
+    user.updateProfile({
+      displayName: getname
+    }).then(function () {
+      $('#nameInput').val('');
+    }).catch(function (error) {
+      // An error happened.
+    });
+  }
 }
 
 var prevUser;
@@ -116,7 +126,7 @@ $('.playClick1').on("click", function (e) {//button 1 click event
     return;
   }
   if (userplay) {
-    var userclicked = userplay.uid;//get unique id from user who clicked
+    var userclicked = userplay.displayName;//get unique id from user who clicked
     console.log(userclicked);
     p1.set({
       "losses": 0,
@@ -141,7 +151,7 @@ $('.playClick2').on("click", function (e) {//button 2 click event
     return;
   }
   if (userplay) {
-    var userclicked = userplay.uid;//get unique id from user who clicked
+    var userclicked = userplay.displayName;//get unique id from user who clicked
     console.log(userclicked);
     p2.set({
       "losses": 0,
