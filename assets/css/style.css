@@ -33,3 +33,18 @@ max-width:100%;
 .startForm{
     display:inline-block;
 }
+
+.gameChoice{
+    display:flex;
+    flex-direction:column;
+    border:1px solid black;
+    width:100%;
+    height:33.33%;
+}
+
+.playerOne,.playerTwo{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items:center;
+}

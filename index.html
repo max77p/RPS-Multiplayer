@@ -20,7 +20,15 @@
 <body>
     <div class="container mainContainer">
         <!-- <button type="button" class="btn btn-primary" id="btnLogout">Logout</button> -->
-
+        <div class="asktoPlay playMsg">
+            <h1>who wants to play?</h1>
+            <form class="nameForm">
+                <div class="startForm">
+                    <input type="text" class="form-control" id="nameInput" placeholder="Type here">
+                </div>
+                <button type="submit" class="btn btn-primary startBtn">Press start</button>
+            </form>
+        </div>
         <h1 id="userList"></h1>
 
 
@@ -32,31 +40,43 @@
         </div>
 
         <form class="chatForm">
-            <div class="form-group">
+            <div class="form-group">```
                 <input type="text" class="form-control" id="chatInput" placeholder="Type here">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
         </form>
 
-        <div class="asktoPlay playMsg">
-            <h1>who wants to play?</h1>
-            <form class="nameForm">
-                <div class="startForm">
-                    <input type="text" class="form-control" id="nameInput" placeholder="Type here">
-                </div>
-                <button type="submit" class="btn btn-primary startBtn">Press start</button>
-            </form>
-        </div>
+
 
         <div class="row">
             <div class="col-md-4 innerBox playerOne">
-
                 <button type="button" class="btn btn-primary playClick1">Press to Play</button>
+                <div class="gameChoice rock">
+                        <h4>Rock</h4>
+                    </div>
+                    <div class="gameChoice paper">
+                            <h4>Paper</h4>
+                    </div>
+                    <div class="gameChoice scissor">
+                            <h4>Scissor</h4>
+                    </div>
             </div>
+
             <div class="col-md-4 innerBox gameMessage">
+                <!--show game result here-->
             </div>
+
             <div class="col-md-4 innerBox playerTwo">
                 <button type="button" class="btn btn-primary playClick2">Press to Play</button>
+                <div class="gameChoice rock">
+                    <h4>Rock</h4>
+                </div>
+                <div class="gameChoice paper">
+                        <h4>Paper</h4>
+                </div>
+                <div class="gameChoice scissor">
+                        <h4>Scissor</h4>
+                </div>
             </div>
         </div>
 

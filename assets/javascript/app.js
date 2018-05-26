@@ -115,16 +115,17 @@ function getPlayer() {
 
 var prevUser;
 var alreadyClicked;
-
 $('.playClick1').on("click", function (e) {//button 1 click event
   e.preventDefault();
   var userplay = firebase.auth().currentUser;
   console.log(userplay);
 
-  if (alreadyClicked) {
+  if (alreadyClicked) {//if already clicked don't allow rest of action
     alert("already clicked");
     return;
   }
+
+
   if (userplay) {
     var userclicked = userplay.displayName;//get unique id from user who clicked
     console.log(userclicked);
@@ -133,8 +134,6 @@ $('.playClick1').on("click", function (e) {//button 1 click event
       "name": userclicked,
       "wins": 0
     })
-
-
   } else {
     // No user is signed in.
   }
@@ -150,6 +149,7 @@ $('.playClick2').on("click", function (e) {//button 2 click event
     alert("already clicked");
     return;
   }
+
   if (userplay) {
     var userclicked = userplay.displayName;//get unique id from user who clicked
     console.log(userclicked);
@@ -158,7 +158,6 @@ $('.playClick2').on("click", function (e) {//button 2 click event
       "name": userclicked,
       "wins": 0
     })
-
   } else {
     // No user is signed in.
   }
@@ -166,25 +165,46 @@ $('.playClick2').on("click", function (e) {//button 2 click event
 });
 
 
-p2.on("value", function (snapshot) {//player two to database
-  var test = snapshot.val().name;
-  console.log(test);
-  if (test) {
-    $('.playClick2').html(test);
-    $('.playClick2').attr("data-name", test);
-    alreadyClicked2 = true;
-  }
-});
-
-p1.on("value", function (snapshot) {//player one to database
+$('.gameChoice').hide();
+p1.on("value", function (snapshot) {//player one from database
   var test = snapshot.val().name;
   console.log(test);
   if (test) {
     $('.playClick1').html(test);
     $('.playClick1').attr("data-name", test);
     alreadyClicked = true;
+
   }
 });
+
+p2.on("value", function (snapshot) {//player two from database
+  var test = snapshot.val().name;
+  console.log(test);
+  if (test) {
+    $('.playClick2').html(test);
+    $('.playClick2').attr("data-name", test);
+    alreadyClicked2 = true;
+
+  }
+});
+
+var readyPlay;
+players.on("value", function (snapshot) {
+  var gameTime=snapshot.numChildren();
+if(gameTime==2){
+ readyToPlay();
+}
+});
+
+function readyToPlay(){
+$('.playClick1').hide();
+$('.playClick2').hide();
+$('.gameChoice').show();
+
+
+}
+
+
 
 
 
@@ -194,7 +214,7 @@ p1.on("value", function (snapshot) {//player one to database
 database.ref(chatLog).orderByChild('chat').on("child_added", function (snapshot) {
   //gettings value to append to html
   // Log the value of the various properties
-  console.log(snapshot.val());
+  //console.log(snapshot.val());
 
   var chattext = snapshot.val().chat;
   var chatname = snapshot.val().name;
@@ -245,6 +265,44 @@ function inputtext(uid, anon) {//input chat text to database
 
 }
 
+
+
+
+
+
+// Compare user choice vs computer choice
+var compare = function (choice1, choice2) {
+  if (choice1 === choice2) {
+    return "It's a tie!";
+  }
+  if (choice1 === "rock") {
+    if (choice2 === "scissors") {
+      // rock wins
+      return "You win!";
+    } else {
+      // paper wins
+      return "You lose! Try again.";
+    }
+  }
+  if (choice1 === "paper") {
+    if (choice2 === "rock") {
+      // paper wins
+      return "You win!";
+    } else {
+      // scissors wins
+      return "You lose! Try again.";
+    }
+  }
+  if (choice1 === "scissors") {
+    if (choice2 === "rock") {
+      // rock wins
+      return "You lose! Try again.";
+    } else {
+      // scissors wins
+      return "You win!";
+    }
+  }
+};
 
 
 
