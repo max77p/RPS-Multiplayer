@@ -252,9 +252,7 @@ function bothPlayersSelected() {
       $('.playerOne').append(user1Choice);
       $('.playerTwo').append(user2Choice);
     }
-
   }
-
 }
 
 
