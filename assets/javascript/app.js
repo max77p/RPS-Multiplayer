@@ -199,12 +199,15 @@ if(gameTime==2){
 
 function readyToPlay(el){
  var user1=el.val()[1];
+ console.log(user1.name);
  var user2=el.val()[2];
+ var user = firebase.auth().currentUser;
+ console.log(user);
 
- if(user1){
+ if(user.displayName==user1.name){
    $('.gameChoice1').show();
  }
- if(user2){
+ else if(user.displayName==user2.name){
    $('.gameChoice2').show();
  }
 
