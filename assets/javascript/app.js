@@ -256,19 +256,26 @@ function bothPlayersSelected() {
   $('.playerTwo').append(user2Choice);
   }
 
-  if(oneSelected&&twoSelected){
-   var c1=user1Choice;
-   var c2=user2Choice;
-   compare(c1,c2);
-    
-  }
+  
 }
+
+players.on("value",function(snapshot){
+ var p1=snapshot.val()[1].choice;
+ var p2=snapshot.val()[2].choice;
+
+ if(p1&&p2){
+   console.log(compare(p1,p2));
+ }
+
+
+
+});
 
 
 // Run the compare function
 // var results = compare(userChoice,computerChoice);
 // Compare user choice vs computer choice
-var compare = function (choice1, choice2) {
+var compare=function(choice1, choice2) {
   if (choice1 === choice2) {
     return "It's a tie!";
   }
