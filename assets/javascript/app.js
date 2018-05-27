@@ -269,7 +269,10 @@ players.on("value", function (snapshot) {
     $('.gameChoice1,.gameChoice2').hide();
     $('.playerOne').append(p1);
     $('.playerTwo').append(p2);
-  compare(p1,p2);
+    $('.gameMessage').html(compare(p1,p2));
+    setTimeout(function(){
+      $('.gameChoice1,.gameChoice2').show();
+    },5000)
   }
 });
 
@@ -278,24 +281,24 @@ players.on("value", function (snapshot) {
 // Run the compare function
 // var results = compare(userChoice,computerChoice);
 // Compare user choice vs computer choice
-var compare=function(choice1, choice2) {
+var compare = function (choice1, choice2) {
   if (choice1 === choice2) {
     return "It's a tie!";
   }
-  else if ((choice1==="Rock" || choice2 === "Rock") && (choice2==="Scissors" || choice1 === "Scissors")) {
+  else if ((choice1 === "Rock" || choice2 === "Rock") && (choice2 === "Scissors" || choice1 === "Scissors")) {
     // rock wins
     return "Rock wins!";
   }
-  else if ((choice1==="Paper" || choice2 === "Paper") && (choice2==="Rock" || choice1 === "Rock")) {
+  else if ((choice1 === "Paper" || choice2 === "Paper") && (choice2 === "Rock" || choice1 === "Rock")) {
     // paper wins
     return "Paper wins!";
   }
-  else if ((choice1==="Paper" || choice2 === "Paper") && (choice2==="Scissors" || choice1 === "Scissors")) {
+  else if ((choice1 === "Paper" || choice2 === "Paper") && (choice2 === "Scissors" || choice1 === "Scissors")) {
 
     return "scissors win!";
   }
 
-  else if ((choice1==="Scissors"||choice2 === "Scissors") && (choice2==="Rock" || choice1 === "Rock")) {
+  else if ((choice1 === "Scissors" || choice2 === "Scissors") && (choice2 === "Rock" || choice1 === "Rock")) {
     // rock wins
     return "Rock Wins!";
   }
