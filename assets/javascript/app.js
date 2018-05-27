@@ -263,6 +263,11 @@ players.on("value",function(snapshot){
  var p1=snapshot.val()[1].choice;
  var p2=snapshot.val()[2].choice;
 
+ if(p1==="rock"){
+   console.log("yes");
+ }
+ else if (p2==="scissor")
+
  if(p1&&p2){
    console.log(compare(p1,p2));
  }
