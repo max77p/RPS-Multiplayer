@@ -249,6 +249,9 @@ function bothPlayersSelected() {
   $('.playerOne').append(user1Choice);
   }
   if(twoSelected){
+    p2.update({
+      "choice":user2Choice
+    })
   $('.gameChoice2').hide();
   $('.playerTwo').append(user2Choice);
   }
