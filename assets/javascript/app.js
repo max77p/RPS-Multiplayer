@@ -224,7 +224,7 @@ var twoSelected;
 $('.gameChoice1').on("click", function (e) {
   e.preventDefault();
   console.log($(this));
-  user1Choice = $(this)[0].innerText;
+  user1Choice = $(this)[0].innerText.trim();
   console.log(user1Choice);
   oneSelected = true;
   bothPlayersSelected();
@@ -233,7 +233,7 @@ $('.gameChoice1').on("click", function (e) {
 $('.gameChoice2').on("click", function (e) {
   e.preventDefault();
   console.log($(this));
-  user2Choice = $(this)[0].innerText;
+  user2Choice = $(this)[0].innerText.trim();
   console.log(user2Choice);
   twoSelected = true;
   bothPlayersSelected();
@@ -261,12 +261,15 @@ function bothPlayersSelected() {
 
 players.on("value", function (snapshot) {
   var p1 = snapshot.val()[1].choice;
+  console.log(p1);
   var p2 = snapshot.val()[2].choice;
+  console.log(p2);
 
   if (p1 && p2) {
-
-    compare(p1, p2);
-
+    $('.gameChoice1,.gameChoice2').hide();
+    $('.playerOne').append(p1);
+    $('.playerTwo').append(p2);
+  compare(p1,p2);
   }
 });
 
@@ -275,22 +278,26 @@ players.on("value", function (snapshot) {
 // Run the compare function
 // var results = compare(userChoice,computerChoice);
 // Compare user choice vs computer choice
-function compare(choice1, choice2) {
+var compare=function(choice1, choice2) {
   if (choice1 === choice2) {
-    console.log("It's a tie!");
+    return "It's a tie!";
   }
-  if (choice1 === "Rock" && choice2 === "Scissors") {
+  else if ((choice1==="Rock" || choice2 === "Rock") && (choice2==="Scissors" || choice1 === "Scissors")) {
     // rock wins
-    console.log("Scissors win!");
+    return "Rock wins!";
   }
-  if (choice1 === "Paper" && choice2 === "Rock") {
+  else if ((choice1==="Paper" || choice2 === "Paper") && (choice2==="Rock" || choice1 === "Rock")) {
     // paper wins
-    console.log("Paper win!");
+    return "Paper wins!";
+  }
+  else if ((choice1==="Paper" || choice2 === "Paper") && (choice2==="Scissors" || choice1 === "Scissors")) {
+
+    return "scissors win!";
   }
 
-  if (choice1 === "Scissors" && choice2 === "Rock") {
+  else if ((choice1==="Scissors"||choice2 === "Scissors") && (choice2==="Rock" || choice1 === "Rock")) {
     // rock wins
-    console.log("Rock Wins!");
+    return "Rock Wins!";
   }
 };
 
