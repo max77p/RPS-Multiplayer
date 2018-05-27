@@ -104,7 +104,7 @@ function getPlayer() {
   if (!getname) {
     alert("please enter a name");
   }
-  else if(!user.displayName) {
+  else {
     user.updateProfile({
       displayName: getname
     }).then(function () {
@@ -112,9 +112,6 @@ function getPlayer() {
     }).catch(function (error) {
       // An error happened.
     });
-  }
-  else{
-    alert("already loggedn in");
   }
 }
 
@@ -125,6 +122,7 @@ var u2ClkBtnAlready;
 $('.playClick1').on("click", function (e) {//button 1 click event
   e.preventDefault();
   var userplay = firebase.auth().currentUser;
+ u1ClkBtnAlready=userplay.uid;
   console.log(userplay);
 
   if (alreadyClicked) {//if already clicked don't allow rest of action
@@ -154,7 +152,7 @@ var alreadyClicked2;
 $('.playClick2').on("click", function (e) {//button 2 click event
   e.preventDefault();
   var userplay = firebase.auth().currentUser;
-  if (alreadyClicked2) {
+  if (alreadyClicked2||u1ClkBtnAlready===userplay.uid) {
     alert("already clicked");
     return;
   }
