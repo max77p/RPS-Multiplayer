@@ -191,27 +191,72 @@ p2.on("value", function (snapshot) {//player two from database
 
 var readyPlay;
 players.on("value", function (snapshot) {
-  var gameTime=snapshot.numChildren();
-if(gameTime==2){
- readyToPlay(snapshot);
-}
+  var gameTime = snapshot.numChildren();
+  if (gameTime == 2) {
+    readyToPlay(snapshot);
+  }
 });
 
-function readyToPlay(el){
- var user1=el.val()[1];
- console.log(user1.name);
- var user2=el.val()[2];
- var user = firebase.auth().currentUser;
- console.log(user);
+function readyToPlay(el) {//only show player 1 div, don't show player 2 div
+  var user1 = el.val()[1];
+  //console.log(user1.name);
+  var user2 = el.val()[2];
+  var user = firebase.auth().currentUser;
+  //console.log(user);
 
- if(user.displayName==user1.name){
-   $('.gameChoice1').show();
- }
- else if(user.displayName==user2.name){
-   $('.gameChoice2').show();
- }
+  if (user.displayName == user1.name) {
+    $('.gameChoice1').show();
+  }
+  else if (user.displayName == user2.name) {
+    $('.gameChoice2').show();
+  }
 
 }
+
+
+
+var user1Choice;
+var user2Choice;
+var oneSelected;
+var twoSelected;
+$('.gameChoice1').on("click", function (e) {
+  e.preventDefault();
+  console.log($(this));
+  user1Choice = $(this)[0].innerText;
+  console.log(user1Choice);
+  oneSelected=true;
+  bothPlayersSelected();
+})
+
+$('.gameChoice2').on("click", function (e) {
+  e.preventDefault();
+  console.log($(this));
+  user2Choice = $(this)[0].innerText;
+  twoSelected=true;
+  bothPlayersSelected();
+})
+
+function bothPlayersSelected() {
+  var user = firebase.auth().currentUser;
+  if(oneSelected){
+  $('.gameChoice1').hide();
+  $('.playerOne').append(user1Choice);
+  }
+  if(twoSelected){
+  $('.gameChoice2').hide();
+  $('.playerTwo').append(user2Choice);
+  }
+
+  if(oneSelected&&twoSelected){
+    if(user){
+      $('.playerOne').append(user1Choice);
+      $('.playerTwo').append(user2Choice);
+    }
+
+  }
+
+}
+
 
 // Run the compare function
 // var results = compare(userChoice,computerChoice);

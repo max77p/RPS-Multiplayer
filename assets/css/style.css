@@ -48,3 +48,8 @@ max-width:100%;
     justify-content: center;
     align-items:center;
 }
+
+.gameChoice1:hover,.gameChoice2:hover{
+    background-color:blue;
+    cursor: pointer;
+}
