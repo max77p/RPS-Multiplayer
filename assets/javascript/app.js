@@ -130,6 +130,7 @@ $('.playClick1').on("click", function (e) {//button 1 click event
     var userclicked = userplay.displayName;//get unique id from user who clicked
     console.log(userclicked);
     p1.set({
+      "choice":"",
       "losses": 0,
       "name": userclicked,
       "wins": 0
@@ -154,6 +155,7 @@ $('.playClick2').on("click", function (e) {//button 2 click event
     var userclicked = userplay.displayName;//get unique id from user who clicked
     console.log(userclicked);
     p2.set({
+      "choice":"",
       "losses": 0,
       "name": userclicked,
       "wins": 0
@@ -232,6 +234,7 @@ $('.gameChoice2').on("click", function (e) {
   e.preventDefault();
   console.log($(this));
   user2Choice = $(this)[0].innerText;
+  console.log(user2Choice);
   twoSelected=true;
   bothPlayersSelected();
 })
@@ -239,6 +242,9 @@ $('.gameChoice2').on("click", function (e) {
 function bothPlayersSelected() {
   var user = firebase.auth().currentUser;
   if(oneSelected){
+    p1.update({
+      "choice":user1Choice
+    })
   $('.gameChoice1').hide();
   $('.playerOne').append(user1Choice);
   }
@@ -248,10 +254,10 @@ function bothPlayersSelected() {
   }
 
   if(oneSelected&&twoSelected){
-    if(user){
-      $('.playerOne').append(user1Choice);
-      $('.playerTwo').append(user2Choice);
-    }
+   var c1=user1Choice;
+   var c2=user2Choice;
+   compare(c1,c2);
+    
   }
 }
 
