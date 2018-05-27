@@ -130,7 +130,7 @@ $('.playClick1').on("click", function (e) {//button 1 click event
     var userclicked = userplay.displayName;//get unique id from user who clicked
     console.log(userclicked);
     p1.set({
-      "choice":"",
+      "choice": "",
       "losses": 0,
       "name": userclicked,
       "wins": 0
@@ -155,7 +155,7 @@ $('.playClick2').on("click", function (e) {//button 2 click event
     var userclicked = userplay.displayName;//get unique id from user who clicked
     console.log(userclicked);
     p2.set({
-      "choice":"",
+      "choice": "",
       "losses": 0,
       "name": userclicked,
       "wins": 0
@@ -226,7 +226,7 @@ $('.gameChoice1').on("click", function (e) {
   console.log($(this));
   user1Choice = $(this)[0].innerText;
   console.log(user1Choice);
-  oneSelected=true;
+  oneSelected = true;
   bothPlayersSelected();
 })
 
@@ -235,76 +235,62 @@ $('.gameChoice2').on("click", function (e) {
   console.log($(this));
   user2Choice = $(this)[0].innerText;
   console.log(user2Choice);
-  twoSelected=true;
+  twoSelected = true;
   bothPlayersSelected();
 })
 
 function bothPlayersSelected() {
   var user = firebase.auth().currentUser;
-  if(oneSelected){
+  if (oneSelected) {
     p1.update({
-      "choice":user1Choice
+      "choice": user1Choice
     })
-  $('.gameChoice1').hide();
-  $('.playerOne').append(user1Choice);
+    $('.gameChoice1').hide();
+    $('.playerOne').append(user1Choice);
   }
-  if(twoSelected){
+  if (twoSelected) {
     p2.update({
-      "choice":user2Choice
+      "choice": user2Choice
     })
-  $('.gameChoice2').hide();
-  $('.playerTwo').append(user2Choice);
+    $('.gameChoice2').hide();
+    $('.playerTwo').append(user2Choice);
   }
 
-  
+
 }
 
-players.on("value",function(snapshot){
- var p1=snapshot.val()[1].choice;
- var p2=snapshot.val()[2].choice;
+players.on("value", function (snapshot) {
+  var p1 = snapshot.val()[1].choice;
+  var p2 = snapshot.val()[2].choice;
 
- if(p1&&p2){
-   console.log(compare(p1,p2));
- }
+  if (p1 && p2) {
 
+    compare(p1, p2);
 
-
+  }
 });
+
 
 
 // Run the compare function
 // var results = compare(userChoice,computerChoice);
 // Compare user choice vs computer choice
-var compare=function(choice1, choice2) {
+function compare(choice1, choice2) {
   if (choice1 === choice2) {
-    return "It's a tie!";
+    console.log("It's a tie!");
   }
-  if (choice1 === "Rock") {
-    if (choice2 === "Scissors") {
-      // rock wins
-      return "You win!";
-    } else {
-      // paper wins
-      return "You lose! Try again.";
-    }
+  if (choice1 === "Rock" && choice2 === "Scissors") {
+    // rock wins
+    console.log("Scissors win!");
   }
-  if (choice1 === "Paper") {
-    if (choice2 === "Rock") {
-      // paper wins
-      return "You win!";
-    } else {
-      // scissors wins
-      return "You lose! Try again.";
-    }
+  if (choice1 === "Paper" && choice2 === "Rock") {
+    // paper wins
+    console.log("Paper win!");
   }
-  if (choice1 === "Scissors") {
-    if (choice2 === "Rock") {
-      // rock wins
-      return "You lose! Try again.";
-    } else {
-      // scissors wins
-      return "You win!";
-    }
+
+  if (choice1 === "Scissors" && choice2 === "Rock") {
+    // rock wins
+    console.log("Rock Wins!");
   }
 };
 
