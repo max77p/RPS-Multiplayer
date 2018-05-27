@@ -36,7 +36,7 @@ function restartGame() {
 
     if (snap.val()) {
       // Add user to the connections list.
-      
+
       var con = connectionsRef;
 
       var con = connectionsRef.push(true);
@@ -116,23 +116,23 @@ function getPlayer() {
 }
 
 
+
 var alreadyClicked;
-var u1ClkBtnAlready;
+var u1ClkBtn;
+var u2ClkBtn;
 var prevUID;
+
 $('.playClick1').on("click", function (e) {//button 1 click event
-  e.preventDefault();
-  var userplay = firebase.auth().currentUser;
-  
+e.preventDefault();
+var userplay = firebase.auth().currentUser;
 
   console.log(userplay);
 
-  if (prevUID===userplay.uid) {//if already clicked don't allow rest of action
-    alert("already clicked");
-    return;
-  }
-  alreadyClicked = true;
-
-  if (userplay) {
+  // if (alreadyClicked) {//if already clicked don't allow rest of action
+  //   alert("already clicked");
+  //   return;
+  // }
+  if (userplay && prevUID!=userplay.uid) {
     var userclicked = userplay.displayName;//get unique id from user who clicked
     console.log(userclicked);
     p1.set({
@@ -145,22 +145,21 @@ $('.playClick1').on("click", function (e) {//button 1 click event
   } else {
     // No user is signed in.
   }
-
 });
+
 
 
 var alreadyClicked2;
 $('.playClick2').on("click", function (e) {//button 2 click event
+  
   e.preventDefault();
   var userplay = firebase.auth().currentUser;
-  if (prevUID===userplay.uid) {
-    alert("already clicked");
-    return;
-  }
+  // if (alreadyClicked2) {
+  //   alert("already clicked");
+  //   return;
+  // }
 
-  alreadyClicked2 = true;
-
-  if (userplay) {
+  if (userplay && prevUID!=userplay.uid) {
     var userclicked = userplay.displayName;//get unique id from user who clicked
     console.log(userclicked);
     p2.set({
@@ -185,7 +184,7 @@ p1.on("value", function (snapshot) {//player one from database
   if (test) {
     $('.playClick1').html(test);
     $('.playClick1').attr("data-name", test);
-    
+
 
   }
 });
@@ -196,7 +195,7 @@ p2.on("value", function (snapshot) {//player two from database
   if (test) {
     $('.playClick2').html(test);
     $('.playClick2').attr("data-name", test);
-    
+
 
   }
 });
