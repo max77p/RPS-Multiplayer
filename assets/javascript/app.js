@@ -118,18 +118,19 @@ function getPlayer() {
 
 var alreadyClicked;
 var u1ClkBtnAlready;
-var u2ClkBtnAlready;
+var prevUID;
 $('.playClick1').on("click", function (e) {//button 1 click event
   e.preventDefault();
   var userplay = firebase.auth().currentUser;
- u1ClkBtnAlready=userplay.uid;
+  
+
   console.log(userplay);
 
-  if (alreadyClicked) {//if already clicked don't allow rest of action
+  if (prevUID===userplay.uid) {//if already clicked don't allow rest of action
     alert("already clicked");
     return;
   }
-
+  alreadyClicked = true;
 
   if (userplay) {
     var userclicked = userplay.displayName;//get unique id from user who clicked
@@ -140,7 +141,7 @@ $('.playClick1').on("click", function (e) {//button 1 click event
       "name": userclicked,
       "wins": 0
     })
-    alreadyClicked = true;
+    prevUID=userplay.uid;
   } else {
     // No user is signed in.
   }
@@ -152,10 +153,12 @@ var alreadyClicked2;
 $('.playClick2').on("click", function (e) {//button 2 click event
   e.preventDefault();
   var userplay = firebase.auth().currentUser;
-  if (alreadyClicked2||u1ClkBtnAlready===userplay.uid) {
+  if (prevUID===userplay.uid) {
     alert("already clicked");
     return;
   }
+
+  alreadyClicked2 = true;
 
   if (userplay) {
     var userclicked = userplay.displayName;//get unique id from user who clicked
@@ -166,7 +169,7 @@ $('.playClick2').on("click", function (e) {//button 2 click event
       "name": userclicked,
       "wins": 0
     })
-    alreadyClicked2 = true;
+    prevUID=userplay.uid;
   } else {
     // No user is signed in.
   }
