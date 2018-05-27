@@ -336,9 +336,12 @@ function quitGame() {
       $('.gameChoice1').hide();
       $('.gameChoice2').hide();
       $('.playClick1').html("Press to Play");
+      $('.playClick2').html("Press to Play");
       $('.playClick1').attr("data-name", "");
+      $('.playClick2').attr("data-name", "");
       alreadyClicked = false;
       alreadyClicked2 = false;
+      prevUID="";
       restartGame();
       quitGame1 = false;
 
