@@ -165,7 +165,8 @@ $('.playClick2').on("click", function (e) {//button 2 click event
 });
 
 
-$('.gameChoice').hide();
+$('.gameChoice1').hide();
+$('.gameChoice2').hide();
 p1.on("value", function (snapshot) {//player one from database
   var test = snapshot.val().name;
   console.log(test);
@@ -192,14 +193,22 @@ var readyPlay;
 players.on("value", function (snapshot) {
   var gameTime=snapshot.numChildren();
 if(gameTime==2){
- readyToPlay();
+ readyToPlay(snapshot);
 }
 });
 
-function readyToPlay(){
-$('.playClick1').hide();
-$('.playClick2').hide();
-$('.gameChoice').show();
+function readyToPlay(el){
+ var user1=el.val()[1];
+ var user2=el.val()[2];
+
+ if(user1){
+   $('.gameChoice1').show();
+ }
+ if(user2){
+   $('.gameChocie2').show();
+ }
+  
+
 
 
 }
