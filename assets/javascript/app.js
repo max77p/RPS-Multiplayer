@@ -205,13 +205,47 @@ function readyToPlay(el){
    $('.gameChoice1').show();
  }
  if(user2){
-   $('.gameChocie2').show();
+   $('.gameChoice2').show();
  }
-  
-
-
 
 }
+
+// Run the compare function
+// var results = compare(userChoice,computerChoice);
+// Compare user choice vs computer choice
+var compare = function (choice1, choice2) {
+  if (choice1 === choice2) {
+    return "It's a tie!";
+  }
+  if (choice1 === "rock") {
+    if (choice2 === "scissors") {
+      // rock wins
+      return "You win!";
+    } else {
+      // paper wins
+      return "You lose! Try again.";
+    }
+  }
+  if (choice1 === "paper") {
+    if (choice2 === "rock") {
+      // paper wins
+      return "You win!";
+    } else {
+      // scissors wins
+      return "You lose! Try again.";
+    }
+  }
+  if (choice1 === "scissors") {
+    if (choice2 === "rock") {
+      // rock wins
+      return "You lose! Try again.";
+    } else {
+      // scissors wins
+      return "You win!";
+    }
+  }
+};
+
 
 
 
@@ -279,39 +313,6 @@ function inputtext(uid, anon) {//input chat text to database
 
 
 
-// Compare user choice vs computer choice
-var compare = function (choice1, choice2) {
-  if (choice1 === choice2) {
-    return "It's a tie!";
-  }
-  if (choice1 === "rock") {
-    if (choice2 === "scissors") {
-      // rock wins
-      return "You win!";
-    } else {
-      // paper wins
-      return "You lose! Try again.";
-    }
-  }
-  if (choice1 === "paper") {
-    if (choice2 === "rock") {
-      // paper wins
-      return "You win!";
-    } else {
-      // scissors wins
-      return "You lose! Try again.";
-    }
-  }
-  if (choice1 === "scissors") {
-    if (choice2 === "rock") {
-      // rock wins
-      return "You lose! Try again.";
-    } else {
-      // scissors wins
-      return "You win!";
-    }
-  }
-};
 
 
 
