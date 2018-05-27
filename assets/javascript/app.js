@@ -241,19 +241,20 @@ $('.gameChoice2').on("click", function (e) {
 
 function bothPlayersSelected() {
   var user = firebase.auth().currentUser;
+
   if (oneSelected) {
     p1.update({
       "choice": user1Choice
     })
     $('.gameChoice1').hide();
-    $('.playerOne').append(user1Choice);
+
   }
   if (twoSelected) {
     p2.update({
       "choice": user2Choice
     })
     $('.gameChoice2').hide();
-    $('.playerTwo').append(user2Choice);
+
   }
 
 
@@ -264,15 +265,32 @@ players.on("value", function (snapshot) {
   console.log(p1);
   var p2 = snapshot.val()[2].choice;
   console.log(p2);
-
+  var choiceDiv1 = $('<div class=currentChoice>');
+  var choiceDiv2 = $('<div class=currentChoice>');
+  var message = $('<div class=message>');
   if (p1 && p2) {
     $('.gameChoice1,.gameChoice2').hide();
-    $('.playerOne').append(p1);
-    $('.playerTwo').append(p2);
-    $('.gameMessage').html(compare(p1,p2));
-    setTimeout(function(){
-      $('.gameChoice1,.gameChoice2').show();
-    },5000)
+    var results = compare(p1, p2);
+    message.html(results);
+    if(results==p1){
+      $('.gameMessage').html("player one wins!");
+    }
+    else if(results==p2){
+      $('.gameMessage').html("player two wins!");
+    }
+    else{
+      $('.gameMessage').html("Its a tie!");
+    }
+    $('.playerOne').append(choiceDiv1.html(p1));
+    $('.playerTwo').append(choiceDiv2.html(p2));
+
+    setTimeout(function () {//after 5 seconds remove and reset
+      readyToPlay(snapshot)
+      $('.currentChoice').remove();
+      $('.gameMessage').html("");
+    }, 5000)
+
+
   }
 });
 
@@ -285,23 +303,30 @@ var compare = function (choice1, choice2) {
   if (choice1 === choice2) {
     return "It's a tie!";
   }
-  else if ((choice1 === "Rock" || choice2 === "Rock") && (choice2 === "Scissors" || choice1 === "Scissors")) {
+  if (choice1 === "Rock" && choice2 === "Scissors") {
     // rock wins
-    return "Rock wins!";
+    return choice1;
   }
-  else if ((choice1 === "Paper" || choice2 === "Paper") && (choice2 === "Rock" || choice1 === "Rock")) {
+  else if (choice2 === "Rock" && choice1 === "Scissors") {
+    return choice2;
+  }
+
+  if (choice1 === "Paper" && choice2 === "Rock") {
     // paper wins
-    return "Paper wins!";
+    return choice1;
   }
-  else if ((choice1 === "Paper" || choice2 === "Paper") && (choice2 === "Scissors" || choice1 === "Scissors")) {
+  else if (choice2 === "Paper" && choice1 === "Rock") {
+    return choice2;
+  }
 
-    return "scissors win!";
+  if (choice1 === "Scissors" && choice2 === "Paper") {
+    //scissors wins
+    return choice1;
+  }
+  else if (choice2 === "Scissors" && choice2 === "Paper") {
+    return choice2;
   }
 
-  else if ((choice1 === "Scissors" || choice2 === "Scissors") && (choice2 === "Rock" || choice1 === "Rock")) {
-    // rock wins
-    return "Rock Wins!";
-  }
 };
 
 
