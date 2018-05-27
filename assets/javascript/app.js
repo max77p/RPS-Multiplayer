@@ -25,35 +25,37 @@ var userDB = database.ref("/UserDB");
 
 var players = database.ref("/players");
 
-var p1 = players.child("1");
-var p2 = players.child("2");
+var p1 = players.child("1/");
+var p2 = players.child("2/");
 
+restartGame();
+function restartGame() {
+  connectedRef.on("value", function (snap) {
+    // If they are connected..
+    //console.log(snap);
 
-connectedRef.on("value", function (snap) {
-  // If they are connected..
-  //console.log(snap);
+    if (snap.val()) {
+      // Add user to the connections list.
+      
+      var con = connectionsRef;
 
-  if (snap.val()) {
-    // Add user to the connections list.
-    var con = connectionsRef;
+      var con = connectionsRef.push(true);
+      //addUser(con);
+      // Remove user from the connection list when they disconnect.
+      con.onDisconnect().remove();
+    }
 
-    var con = connectionsRef.push(true);
-    //addUser(con);
-    // Remove user from the connection list when they disconnect.
-    con.onDisconnect().remove();
-  }
+  });
 
-});
+  connectionsRef.on("value", function (snap) {
+    // Display the viewer count in the html.
+    $("#userList").html("current number of users: " + snap.numChildren());
+    console.log(snap.val());
 
-connectionsRef.on("value", function (snap) {
-  // Display the viewer count in the html.
-  $("#userList").html("current number of users: " + snap.numChildren());
-  console.log(snap.val());
-
-  // The number of online users is the number of children in the connections list.
-  console.log(snap.numChildren());
-});
-
+    // The number of online users is the number of children in the connections list.
+    console.log(snap.numChildren());
+  });
+}
 
 
 firebase.auth().signInAnonymously().catch(function (error) {
@@ -102,7 +104,7 @@ function getPlayer() {
   if (!getname) {
     alert("please enter a name");
   }
-  else {
+  else if(!user.displayName) {
     user.updateProfile({
       displayName: getname
     }).then(function () {
@@ -111,10 +113,15 @@ function getPlayer() {
       // An error happened.
     });
   }
+  else{
+    alert("already loggedn in");
+  }
 }
 
-var prevUser;
+
 var alreadyClicked;
+var u1ClkBtnAlready;
+var u2ClkBtnAlready;
 $('.playClick1').on("click", function (e) {//button 1 click event
   e.preventDefault();
   var userplay = firebase.auth().currentUser;
@@ -135,6 +142,7 @@ $('.playClick1').on("click", function (e) {//button 1 click event
       "name": userclicked,
       "wins": 0
     })
+    alreadyClicked = true;
   } else {
     // No user is signed in.
   }
@@ -160,6 +168,7 @@ $('.playClick2').on("click", function (e) {//button 2 click event
       "name": userclicked,
       "wins": 0
     })
+    alreadyClicked2 = true;
   } else {
     // No user is signed in.
   }
@@ -175,7 +184,7 @@ p1.on("value", function (snapshot) {//player one from database
   if (test) {
     $('.playClick1').html(test);
     $('.playClick1').attr("data-name", test);
-    alreadyClicked = true;
+    
 
   }
 });
@@ -186,7 +195,7 @@ p2.on("value", function (snapshot) {//player two from database
   if (test) {
     $('.playClick2').html(test);
     $('.playClick2').attr("data-name", test);
-    alreadyClicked2 = true;
+    
 
   }
 });
@@ -217,8 +226,8 @@ function readyToPlay(el) {//only show player 1 div, don't show player 2 div
 
 
 
-var oneSelected=false;
-var twoSelected=false;
+var oneSelected = false;
+var twoSelected = false;
 $('.gameChoice1').on("click", function (e) {
   e.preventDefault();
   console.log($(this));
@@ -226,7 +235,7 @@ $('.gameChoice1').on("click", function (e) {
   console.log(user1Choice);
   oneSelected = true;
   bothPlayersSelected(user1Choice);
-  oneSelected=false;
+  oneSelected = false;
 })
 
 $('.gameChoice2').on("click", function (e) {
@@ -236,7 +245,7 @@ $('.gameChoice2').on("click", function (e) {
   console.log(user2Choice);
   twoSelected = true;
   bothPlayersSelected(user2Choice);
-  twoSelected=false;
+  twoSelected = false;
 })
 
 function bothPlayersSelected(el) {
@@ -273,13 +282,13 @@ players.on("value", function (snapshot) {
     $('.gameChoice1,.gameChoice2').hide();
     var results = compare(p1, p2);
 
-    if(results==p1){
+    if (results == p1) {
       message.text("player one wins!");
     }
-    else if(results==p2){
+    else if (results == p2) {
       message.text("player two wins!");
     }
-    else{
+    else {
       message.text("Its a tie!");
     }
     $('.playerOne').append(choiceDiv1.html(p1));
@@ -291,22 +300,57 @@ players.on("value", function (snapshot) {
       message.text("");
       clearUpdate();
     }, 2000)
-   
+
 
 
   }
 
-  
+
 });
 
-function clearUpdate(){
-p1.update({
-  "choice":""
-})
-p2.update({
-  "choice":""
-})
+function clearUpdate() {
+  p1.update({
+    "choice": ""
+  })
+  p2.update({
+    "choice": ""
+  })
 }
+
+var quitGame1;
+$('.quitBtn').on("click", function (e) {
+  e.preventDefault();
+  quitGame1 = true;
+  quitGame();
+
+});
+
+function quitGame() {
+  players.on("child_added", function (snapshot) {
+    console.log(snapshot.val());
+    var u1 = snapshot.val().name;
+    var u2 = snapshot.val().name;
+
+    if (quitGame1) {
+      players.remove();
+      $('.gameChoice1').hide();
+      $('.gameChoice2').hide();
+      $('.playClick1').html("Press to Play");
+      $('.playClick1').attr("data-name", "");
+      alreadyClicked = false;
+      alreadyClicked2 = false;
+      restartGame();
+      quitGame1 = false;
+
+    }
+
+
+
+
+  });
+}
+
+
 
 
 // Run the compare function
