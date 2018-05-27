@@ -217,46 +217,47 @@ function readyToPlay(el) {//only show player 1 div, don't show player 2 div
 
 
 
-var user1Choice;
-var user2Choice;
-var oneSelected;
-var twoSelected;
+var oneSelected=false;
+var twoSelected=false;
 $('.gameChoice1').on("click", function (e) {
   e.preventDefault();
   console.log($(this));
-  user1Choice = $(this)[0].innerText.trim();
+  var user1Choice = $(this)[0].innerText.trim();
   console.log(user1Choice);
   oneSelected = true;
-  bothPlayersSelected();
+  bothPlayersSelected(user1Choice);
+  oneSelected=false;
 })
 
 $('.gameChoice2').on("click", function (e) {
   e.preventDefault();
   console.log($(this));
-  user2Choice = $(this)[0].innerText.trim();
+  var user2Choice = $(this)[0].innerText.trim();
   console.log(user2Choice);
   twoSelected = true;
-  bothPlayersSelected();
+  bothPlayersSelected(user2Choice);
+  twoSelected=false;
 })
 
-function bothPlayersSelected() {
+function bothPlayersSelected(el) {
   var user = firebase.auth().currentUser;
 
   if (oneSelected) {
+    console.log(oneSelected);
     p1.update({
-      "choice": user1Choice
+      "choice": el
     })
     $('.gameChoice1').hide();
 
   }
   if (twoSelected) {
+    console.log(twoSelected);
     p2.update({
-      "choice": user2Choice
+      "choice": el
     })
     $('.gameChoice2').hide();
 
   }
-
 
 }
 
@@ -267,19 +268,19 @@ players.on("value", function (snapshot) {
   console.log(p2);
   var choiceDiv1 = $('<div class=currentChoice>');
   var choiceDiv2 = $('<div class=currentChoice>');
-  var message = $('<div class=message>');
+  var message = $('.message');
   if (p1 && p2) {
     $('.gameChoice1,.gameChoice2').hide();
     var results = compare(p1, p2);
-    message.html(results);
+
     if(results==p1){
-      $('.gameMessage').html("player one wins!");
+      message.text("player one wins!");
     }
     else if(results==p2){
-      $('.gameMessage').html("player two wins!");
+      message.text("player two wins!");
     }
     else{
-      $('.gameMessage').html("Its a tie!");
+      message.text("Its a tie!");
     }
     $('.playerOne').append(choiceDiv1.html(p1));
     $('.playerTwo').append(choiceDiv2.html(p2));
@@ -287,13 +288,25 @@ players.on("value", function (snapshot) {
     setTimeout(function () {//after 5 seconds remove and reset
       readyToPlay(snapshot)
       $('.currentChoice').remove();
-      $('.gameMessage').html("");
-    }, 5000)
+      message.text("");
+      clearUpdate();
+    }, 2000)
+   
 
 
   }
+
+  
 });
 
+function clearUpdate(){
+p1.update({
+  "choice":""
+})
+p2.update({
+  "choice":""
+})
+}
 
 
 // Run the compare function

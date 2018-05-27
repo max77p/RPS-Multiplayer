@@ -42,14 +42,29 @@ max-width:100%;
     height:33.33%;
 }
 
-.playerOne,.playerTwo{
+.playerOne,.playerTwo,.gameMessage{
     display:flex;
     flex-direction:column;
     justify-content: center;
     align-items:center;
+    height:100%;
 }
 
 .gameChoice1:hover,.gameChoice2:hover{
     background-color:blue;
     cursor: pointer;
+}
+
+#gameSection{
+    height:15em;
+}
+
+
+
+
+.message{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:100%;
 }
