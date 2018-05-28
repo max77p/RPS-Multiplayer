@@ -126,12 +126,11 @@ var currUID;
 var prevUID;
 
 
-$('.gameBtn').on("click", function (e) {
+$('.playClick1,.playClick2').on("click", function (e) {
+  e.preventDefault();
   var userplay = firebase.auth().currentUser;
   console.log(e);
   var clicked = e.target.className;
-
-  console.log(userplay.uid);
 
   var clickedclass = $('.playClick1');
   var clickedclass2 = $('.playClick2');
@@ -149,7 +148,7 @@ $('.gameBtn').on("click", function (e) {
       else {
         console.log("yes");
         prevUID = currUID;//set current to previous for checking later
-        currUID = "";
+        // currUID = "";
         if (clicked1) {//check which button was clicked, here checks if p1 button was clicked
           u1ClkBtn = true;
           var userclicked = userplay.displayName;//get unique id from user who clicked
@@ -186,12 +185,7 @@ $('.gameBtn').on("click", function (e) {
 });
 
 currentUser.on("value", function (snapshot) {
-  var user = firebase.auth().currentUser;
-  console.log(snapshot.val());
-  var whichbtn = snapshot.val().btnclicked;
-  console.log(whichbtn);
-  var whichuser = snapshot.val().userwhoClicked;
-  console.log(whichuser);
+
 
 
 
