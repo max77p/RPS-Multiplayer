@@ -21,14 +21,14 @@ var connectedRef = database.ref(".info/connected");
 
 var chatLog = database.ref("/chatLog");
 
-var currentUser = database.ref("/userClick");
+var currentUser = database.ref("userClick");
 
 var userDB = database.ref("/UserDB");
 
 var players = database.ref("/players");
 
-var p1 = players.child("1/");
-var p2 = players.child("2/");
+var p1 = players.child("one");
+var p2 = players.child("two");
 
 restartGame();
 function restartGame() {
@@ -46,6 +46,7 @@ function restartGame() {
       // Remove user from the connection list when they disconnect.
       con.onDisconnect().remove();
     }
+
 
   });
 
@@ -117,9 +118,6 @@ function getPlayer() {
   }
 }
 
-
-
-var alreadyClicked;
 var u1ClkBtn;
 var u2ClkBtn;
 var currUID;
@@ -128,110 +126,99 @@ var prevUID;
 
 $('.playClick1,.playClick2').on("click", function (e) {
   e.preventDefault();
-  
+  e.stopPropagation();
+
   var userplay = firebase.auth().currentUser;
-  console.log(e); 
-  var clicked = e.target.className;
-
-  var clickedclass1 = $('.playClick1');
-  var clickedclass2 = $('.playClick2');
- 
-  var clicked1 = clickedclass1[0].className;//getclass of first clickbutton
-  console.log(clicked1);
-  var clicked2 = clickedclass2[0].className;//getclass of second clickbutton
-var tst=$('.playClick1').data('name');
-console.log(tst);
-  if (userplay) {
-    if (clicked === clicked1 || clicked === clicked2) {//check if button clicked already
-      currUID = userplay.uid;//push user who clicked to currentuid
-      //console.log(clicked);
-      if (currUID === prevUID) {
-        console.log("same user");
-      }
-      else {
-        u1ClkBtn = true;
-        console.log("yes");
-        prevUID = currUID;//set current to previous for checking later
-        // currUID = "";
-        if (clicked1 && $('.playClick1').data('name')==undefined) {//check which button was clicked, here checks if p1 button was clicked
-          var userclicked = userplay.displayName;//get unique id from user who clicked
-          console.log(userclicked);
-          p1.set({
-            "choice": "",
-            "losses": 0,
-            "name": userclicked,
-            "wins": 0
-          })
-        }
-        else if (clicked2 && $('.playClick2').data('name')==undefined) {//check which button was clicked, here checks if p2 button was clicked
-          u2ClkBtn = true;
-          var userclicked = userplay.displayName;//get unique id from user who clicked
-          console.log(userclicked);
-          p2.set({
-            "choice": "",
-            "losses": 0,
-            "name": userclicked,
-            "wins": 0
-          })
-        }
-
-      }
-    }
+  console.log(userplay.uid);
+  if (userplay.uid === prevUID) {
+    alert("try again");
   }
   else {
-    //no one signed in
+    currentUser.update({
+      "userid": userplay.uid,
+      "btn": e.target.classList[3],
+      "user": userplay.displayName
+    })
+  }
+  checkUser(userplay.uid);
+
+});
+
+function checkUser(el) {
+  currentUser.child('userid').once("value", function (snapshot) {
+    console.log(snapshot.val());
+    currUID = snapshot.val();
+    console.log(currUID);
+    console.log(prevUID);
+    if (currUID === prevUID) {
+      console.log("previous id is not the same");
+    }
+    else {
+      console.log("no previous id click event, you are good to go");
+      prevUID = currUID;
+    }
+
+  });
+}
+
+
+currentUser.once("value", function (snapshot) {
+  console.log(snapshot.val().btn);//playclick1
+  var clicked = snapshot.val().btn;
+  var username = snapshot.val().user;
+  var userid = snapshot.val().userid;
+
+  var clickedClass1 = $('.playClick1');
+  var clickedClass2 = $('.playClick2');
+  //console.log(clickedclass1.hasClass(snapshot.val()));//works
+
+  if (clickedClass1.hasClass(clicked)) {
+    console.log("btn 1 binded!");
+    addP1Screen(username, userid, clickedClass1);
+  }
+  else if (clickedClass2.hasClass(clicked)) {
+    console.log("btn 2 binded!");
+    addP2Screen(username, userid, clickedClass2);
   }
 
-
-return false;
-
-});
-
-currentUser.on("value", function (snapshot) {
-
-
-
-
 });
 
 
 
+//TODO: add names to screen and remove buttons
 $('.gameChoice1').hide();
 $('.gameChoice2').hide();
-p1.on("value", function (snapshot) {//player one from database
-  var test = snapshot.val().name;
-  console.log(test);
-  if (test) {
-    $('.playClick1').html(test);
-    $('.playClick1').attr("data-name", test);
 
+function addP1Screen(elName, elId, elBtn) {
+var h2=$('<h2 class="userName">');
+  elBtn.hide();
+  h2.html(elName);
+  $('.playerOne').prepend(h2);
+  //$('.playClick1').attr("data-name", elName);
+}
 
-  }
-});
+function addP2Screen(elName,elId,elBtn){
+  var h2=$('<h2 class="userName">');
+  elBtn.hide();
+  h2.html(elName);
+  $('.playerOne').prepend(h2);
+  //$('.playClick1').attr("data-name", elName);
+}
 
-p2.on("value", function (snapshot) {//player two from database
-  var test = snapshot.val().name;
-  console.log(test);
-  if (test) {
-    $('.playClick2').html(test);
-    $('.playClick2').attr("data-name", test);
-
-
-  }
-});
 
 var readyPlay;
-players.on("value", function (snapshot) {
+players.on("value", function (snapshot) {//start the game if both players clicked
   var gameTime = snapshot.numChildren();
+  //console.log(gameTime);
   if (gameTime == 2) {
     readyToPlay(snapshot);
   }
 });
 
 function readyToPlay(el) {//only show player 1 div, don't show player 2 div
-  var user1 = el.val()[1];
+  var user1 = el.val()['one'];
   //console.log(user1.name);
-  var user2 = el.val()[2];
+  var user2 = el.val()['two'];
   var user = firebase.auth().currentUser;
   //console.log(user);
 
@@ -250,6 +237,7 @@ var oneSelected = false;
 var twoSelected = false;
 $('.gameChoice1').on("click", function (e) {
   e.preventDefault();
+  e.stopPropagation();
   console.log($(this));
   var user1Choice = $(this)[0].innerText.trim();
   console.log(user1Choice);
@@ -291,9 +279,10 @@ function bothPlayersSelected(el) {
 }
 
 players.on("value", function (snapshot) {
-  var p1 = snapshot.val()[1].choice;
+  console.log(snapshot.val());
+  var p1 = snapshot.val().one['choice'];
   console.log(p1);
-  var p2 = snapshot.val()[2].choice;
+  var p2 = snapshot.val().two['choice'];
   console.log(p2);
   var choiceDiv1 = $('<div class=currentChoice>');
   var choiceDiv2 = $('<div class=currentChoice>');
@@ -340,9 +329,10 @@ function clearUpdate() {
 var quitGame1;
 $('.quitBtn').on("click", function (e) {
   e.preventDefault();
+  e.stopPropagation();
   quitGame1 = true;
   quitGame();
-
+  quitGame1 = false;
 });
 
 function quitGame() {
@@ -357,15 +347,13 @@ function quitGame() {
       $('.gameChoice2').hide();
       $('.playClick1').html("Press to Play");
       $('.playClick2').html("Press to Play");
-      $('.playClick1').attr("data-name", "");
-      $('.playClick2').attr("data-name", "");
-      alreadyClicked = false;
-      alreadyClicked2 = false;
-      prevUID = "";
+      $('.playClick1').attr("data-name", undefined);
+      $('.playClick2').attr("data-name", undefined);
+      u1ClkBtn = false;
+      u2ClkBtn = false;
       restartGame();
-      quitGame1 = false;
-
     }
+
   });
 }
 
