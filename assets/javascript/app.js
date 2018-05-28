@@ -128,29 +128,32 @@ var prevUID;
 
 $('.playClick1,.playClick2').on("click", function (e) {
   e.preventDefault();
+  
   var userplay = firebase.auth().currentUser;
-  console.log(e);
+  console.log(e); 
   var clicked = e.target.className;
 
-  var clickedclass = $('.playClick1');
+  var clickedclass1 = $('.playClick1');
   var clickedclass2 = $('.playClick2');
-  //console.log(clickedclass2[0]);
-  var clicked1 = clickedclass[0].className;//getclass of first clickbutton
+ 
+  var clicked1 = clickedclass1[0].className;//getclass of first clickbutton
+  console.log(clicked1);
   var clicked2 = clickedclass2[0].className;//getclass of second clickbutton
-
+var tst=$('.playClick1').data('name');
+console.log(tst);
   if (userplay) {
     if (clicked === clicked1 || clicked === clicked2) {//check if button clicked already
       currUID = userplay.uid;//push user who clicked to currentuid
-      console.log(clicked);
+      //console.log(clicked);
       if (currUID === prevUID) {
         console.log("same user");
       }
       else {
+        u1ClkBtn = true;
         console.log("yes");
         prevUID = currUID;//set current to previous for checking later
         // currUID = "";
-        if (clicked1) {//check which button was clicked, here checks if p1 button was clicked
-          u1ClkBtn = true;
+        if (clicked1 && $('.playClick1').data('name')==undefined) {//check which button was clicked, here checks if p1 button was clicked
           var userclicked = userplay.displayName;//get unique id from user who clicked
           console.log(userclicked);
           p1.set({
@@ -160,7 +163,7 @@ $('.playClick1,.playClick2').on("click", function (e) {
             "wins": 0
           })
         }
-        else if (clicked2) {//check which button was clicked, here checks if p2 button was clicked
+        else if (clicked2 && $('.playClick2').data('name')==undefined) {//check which button was clicked, here checks if p2 button was clicked
           u2ClkBtn = true;
           var userclicked = userplay.displayName;//get unique id from user who clicked
           console.log(userclicked);
@@ -180,7 +183,7 @@ $('.playClick1,.playClick2').on("click", function (e) {
   }
 
 
-
+return false;
 
 });
 
@@ -191,64 +194,6 @@ currentUser.on("value", function (snapshot) {
 
 });
 
-
-
-
-
-
-
-
-
-
-// $('.playClick1').on("click", function (e) {//button 1 click event
-//   e.preventDefault();
-//   var userplay = firebase.auth().currentUser;
-
-//   console.log(userplay);
-
-
-//   if (userplay) {
-//     var userclicked = userplay.displayName;//get unique id from user who clicked
-//     console.log(userclicked);
-//     p1.set({
-//       "choice": "",
-//       "losses": 0,
-//       "name": userclicked,
-//       "wins": 0
-//     })
-//     prevUID = userplay.uid;
-//   } else {
-//     // No user is signed in.
-//   }
-// });
-
-
-
-// var alreadyClicked2;
-// $('.playClick2').on("click", function (e) {//button 2 click event
-
-//   e.preventDefault();
-//   var userplay = firebase.auth().currentUser;
-//   // if (alreadyClicked2) {
-//   //   alert("already clicked");
-//   //   return;
-//   // }
-
-//   if (userplay && prevUID != userplay.uid) {
-//     var userclicked = userplay.displayName;//get unique id from user who clicked
-//     console.log(userclicked);
-//     p2.set({
-//       "choice": "",
-//       "losses": 0,
-//       "name": userclicked,
-//       "wins": 0
-//     })
-//     prevUID = userplay.uid;
-//   } else {
-//     // No user is signed in.
-//   }
-
-// });
 
 
 $('.gameChoice1').hide();
