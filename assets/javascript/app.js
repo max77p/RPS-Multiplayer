@@ -457,11 +457,14 @@ resetEntireGame();
 
 function resetEntireGame(){
   
-  currentUser.set({
-    "userid": "",
-    "btn": "",
-    "user": ""
-  });
+  // currentUser.set({
+  //   "userid": "",
+  //   "btn": "",
+  //   "user": ""
+  // });
+
+  currentUser.remove();
+  
   passUserName.set({
     "u2": "",
     "btn2": false,
