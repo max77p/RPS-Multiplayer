@@ -252,6 +252,8 @@ passUserName.on("value", function (snapshot) {//keep username on page even if re
 
 
 var readyPlay;
+var gameTimer;
+var counter;
 players.on("value", function (snapshot) {//start the game if both players clicked
   var gameTime = snapshot.numChildren();
   // $('.playClick1').hide();
@@ -262,8 +264,22 @@ players.on("value", function (snapshot) {//start the game if both players clicke
   if (gameTime == 2) {
     readyPlay = true;
     readyToPlay(snapshot);
+ 
   }
 });
+// var n=5;
+
+// function timer(){
+//   n--;
+//   console.log(n);
+//   if(n < 0){
+//      resetEntireGame();
+//      //clearInterval(counter);
+//   }
+//   console.log(n);
+// }
+
+// console.log(gameTimer);
 
 function readyToPlay(elSnap) {//only show player 1 div, don't show player 2 div
   var user1 = elSnap.val()['one'];//first player
@@ -388,9 +404,6 @@ players.on("value", function (snapshot) {
     $('.playerOne').append(choiceDiv1.html(p1Choice));
     $('.playerTwo').append(choiceDiv2.html(p2Choice));
 
-
-
-
     setTimeout(function () {//after 5 seconds remove and reset
       readyToPlay(snapshot)
       $('.currentChoice').remove();
@@ -436,7 +449,15 @@ $('.quitBtn').on("click", function (e) {
   e.preventDefault();
   e.stopPropagation();
 
+resetEntireGame();
   //players.remove();
+ 
+  quitGame1 = true;
+
+});
+
+function resetEntireGame(){
+  
   currentUser.set({
     "userid": "",
     "btn": "",
@@ -449,18 +470,11 @@ $('.quitBtn').on("click", function (e) {
     "btn1": false
   })
 
- 
-
   p1.remove();
   p2.remove();
+  $('.quitBtn').hide();
 
-  
-  //$('.playClick1,.playClick2').show();
-    $('.quitBtn').hide();
-
-  quitGame1 = true;
-
-});
+}
 
 
 passUserName.on("value",function(snapshot){
