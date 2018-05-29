@@ -70,7 +70,7 @@ firebase.auth().signInAnonymously().catch(function (error) {
   // ...
 });
 
-$('.playClick1,.playClick2').hide();
+
 firebase.auth().onAuthStateChanged(function (user) {
   console.log(user);
 
@@ -79,7 +79,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     var uid = user.uid;
 
     allowUser(uid, isAnonymous);
-    $('.playClick1,.playClick2').show();
+    
 
     userDB.child(uid).onDisconnect().remove();
 
@@ -459,20 +459,20 @@ resetEntireGame();
 
 function resetEntireGame(){
   
-  // currentUser.set({
-  //   "userid": "",
-  //   "btn": "",
-  //   "user": ""
-  // });
+  currentUser.set({
+    "userid": "",
+    "btn": "",
+    "user": ""
+  });
 
-  currentUser.remove();
+  //currentUser.remove();
 
-  // passUserName.set({
-  //   "u2": "",
-  //   "btn2": false,
-  //   "u1": "",
-  //   "btn1": false
-  // })
+  passUserName.set({
+    "u2": "",
+    "btn2": false,
+    "u1": "",
+    "btn1": false
+  })
   passUserName.remove();
 
   p1.remove();
