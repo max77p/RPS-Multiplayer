@@ -194,10 +194,12 @@ $('.gameChoice2').hide();
 
 //TODO: add names to screen and remove buttons
 function addP1Screen(elName, elId, elBtn) {
-  var h2 = $('<h2 class="userName">');
+  var div=$('<div class="userName">');
+  var h2 = $('<h2>');
   elBtn.hide();
   h2.html(elName);
-  $('.playerOne').prepend(h2);
+  div.append(h2);
+  $('.playerOne').prepend(div);
   //$('.playClick1').attr("data-name", elName);
   p1.set({
     "losses":0,
@@ -207,10 +209,11 @@ function addP1Screen(elName, elId, elBtn) {
 }
 
 function addP2Screen(elName, elId, elBtn) {
-  var h2 = $('<h2 class="userName">');
+  var div=$('<div class="userName">');
+  var h2 = $('<h2>');
   elBtn.hide();
   h2.html(elName);
-  $('.playerTwo').prepend(h2);
+  $('.playerTwo').prepend(div);
   //$('.playClick1').attr("data-name", elName);
   p2.set({
     "losses":0,
