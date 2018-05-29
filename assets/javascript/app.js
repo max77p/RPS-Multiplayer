@@ -30,7 +30,7 @@ var players = database.ref("/players");
 var p1 = players.child("one");
 var p2 = players.child("two");
 
-var passUserName=database.ref("twoUsers");
+var passUserName = database.ref("twoUsers");
 
 restartGame();
 function restartGame() {
@@ -209,7 +209,7 @@ function addP1Screen(elName, elId, elBtn) {
     "wins": 0
   })
   passUserName.update({
-    "u1":elName
+    "u1": elName
   })
 }
 
@@ -225,39 +225,36 @@ function addP2Screen(elName, elId, elBtn) {
     "wins": 0
   })
   passUserName.update({
-    "u2":elName
+    "u2": elName
   })
 }
 
 
-passUserName.on("value",function(snapshot){
-var one=snapshot.val().u1;
-var two=snapshot.val().u2;
-console.log(one);
-console.log(two);
-if(one){
+passUserName.on("value", function (snapshot) {
+  if(readyPlay){
+    return;
+  }
+  var one = snapshot.val().u1;
+  var two = snapshot.val().u2;
+  console.log(one);
+  console.log(two);
+
   var h21 = $('<h2 class="userName">');
 
-$('.playClick1').hide();
-h21.html(one);
+  $('.playClick1').hide();
+  h21.html(one);
   $('.playerOne').prepend(h21);
-}
-if(two){
+
+
   var h22 = $('<h2 class="userName">');
-$('.playClick2').hide();
-h22.html(two);
+  $('.playClick2').hide();
+  h22.html(two);
   $('.playerTwo').prepend(h22);
-}
-
-
-  
-
-  
 
 });
 
 
- 
+
 
 var readyPlay;
 players.on("value", function (snapshot) {//start the game if both players clicked
@@ -268,7 +265,7 @@ players.on("value", function (snapshot) {//start the game if both players clicke
   console.log(gameTime);
   console.log(snapshot.val());
   if (gameTime == 2) {
-   
+      readyPlay=true;
     readyToPlay(snapshot);
   }
 });
