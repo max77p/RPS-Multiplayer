@@ -34,32 +34,32 @@ var passUserName = database.ref("twoUsers");
 
 
 
-// connectedRef.on("value", function (snap) {
-//   // If they are connected..
-//   //console.log(snap);
+connectedRef.on("value", function (snap) {
+  // If they are connected..
+  //console.log(snap);
 
-//   if (snap.val()) {
-//     // Add user to the connections list.
+  if (snap.val()) {
+    // Add user to the connections list.
 
-//     var con = connectionsRef;
+    var con = connectionsRef;
 
-//     var con = connectionsRef.push(true);
-//     //addUser(con);
-//     // Remove user from the connection list when they disconnect.
-//     con.onDisconnect().remove();
-//   }
+    var con = connectionsRef.push(true);
+    //addUser(con);
+    // Remove user from the connection list when they disconnect.
+    con.onDisconnect().remove();
+  }
 
 
-// });
+});
 
-// connectionsRef.on("value", function (snap) {
-//   // Display the viewer count in the html.
-//   $("#userList").html("current number of users: " + snap.numChildren());
-//   console.log(snap.val());
+connectionsRef.on("value", function (snap) {
+  // Display the viewer count in the html.
+  $("#userList").html("current number of users: " + snap.numChildren());
+  console.log(snap.val());
 
-//   // The number of online users is the number of children in the connections list.
-//   console.log(snap.numChildren());
-// });
+  // The number of online users is the number of children in the connections list.
+  console.log(snap.numChildren());
+});
 
 
 
@@ -355,9 +355,17 @@ players.on("value", function (snapshot) {
 
     if (results == p1) {
       message.text("Player one wins!");
+      p1Win+=1;//increase score by 1 for p1
+      p2Lost+=1;//increase loss by 1 for p2
+      $('#wins1').html("Wins: "+p1Win);
+      $('#loss2').html("Lost: "+p2Lost);
     }
     else if (results == p2) {
       message.text("Player two wins!");
+      p2Win+=1;
+      p1Lost+=1;
+      $('#wins2').html("Wins: "+p2Win);
+      $('#loss1').html("Lost: "+p1Lost);
     }
     else {
       message.text("It's a tie!");
@@ -465,7 +473,7 @@ database.ref(chatLog).orderByChild('chat').on("child_added", function (snapshot)
   var chatname = snapshot.val().name;
   var newLine = $("<br>");
   // Change the HTML
-  $(".chatArea").append(newLine).append(chatname + " : " + chattext);
+  $(".chatArea").append(newLine).append(chattext + "  :" + chatname);
   $("#chatInput").val("");
 },// If any errors are experienced, log them to console.
   function (errorObject) {

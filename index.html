@@ -20,38 +20,45 @@
 <body>
     <div class="container mainContainer">
         <!-- <button type="button" class="btn btn-primary" id="btnLogout">Logout</button> -->
-        <div class="asktoPlay playMsg">
-            <h1>who wants to play?</h1>
-            <form class="nameForm">
-                <div class="startForm">
-                    <input type="text" class="form-control" id="nameInput" placeholder="Type here">
-                </div>
-                <button type="submit" class="btn btn-primary startBtn">Press start</button>
+        <h1>Welcome to RPS</h1>
 
-                <div class="endForm">
-                    <input type="text" class="form-control" id="quitGame" placeholder="Y/N and press enter">
-                    <button type="submit" class="btn btn-primary quitBtn">Press to quit</button>
-                </div>
-
-            </form>
-        </div>
         <h1 id="userList"></h1>
 
+        <div class="row">
+            <div class="col-md-6 leftChat">
+                <div class="chatSection">
+                    <div class="chatArea">
 
 
+                    </div>
 
-        <div class="chatArea">
+                    <form class="chatForm">
+                        <div class="form-group">```
+                            <input type="text" class="form-control" id="chatInput" placeholder="Chat here">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6 rightStart">
+                
+                    <form class="nameForm">
+                        <div class="startForm">
+                            <input type="text" class="form-control" id="nameInput" placeholder="Enter your name">
+                            <small id="emailHelp" class="form-text text-muted">Please only change your after quitting a game in progress</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary startBtn">Submit Name</button>
+                    </form>
+                        
+                        <!-- <input type="text" class="form-control" id="quitGame" placeholder="Y/N and press enter"> -->
+                        <button type="submit" class="btn btn-primary quitBtn">Press to quit</button>
+                    
+                    
+               
+            </div>
 
 
         </div>
-
-        <form class="chatForm">
-            <div class="form-group">```
-                <input type="text" class="form-control" id="chatInput" placeholder="Type here">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-        </form>
-
 
 
         <div class="row" id="gameSection">
