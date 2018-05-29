@@ -70,7 +70,7 @@ firebase.auth().signInAnonymously().catch(function (error) {
   // ...
 });
 
-
+$('.playClick1,.playClick2').hide();
 firebase.auth().onAuthStateChanged(function (user) {
   console.log(user);
 
@@ -97,7 +97,7 @@ $("#nameInput").keypress(function (event) {
   }
 });
 
-$('.startBtn').on("click", function (e) {
+$('.startBtn').on("click", function (e) {//submit name button
   e.preventDefault();
   getPlayer();
 })
@@ -114,6 +114,7 @@ function getPlayer() {
       displayName: getname
     }).then(function () {
       $('#nameInput').val('');
+      $('.playClick1,.playClick2').show();
     }).catch(function (error) {
       // An error happened.
     });
@@ -464,7 +465,7 @@ function resetEntireGame(){
   // });
 
   currentUser.remove();
-  
+
   passUserName.set({
     "u2": "",
     "btn2": false,
