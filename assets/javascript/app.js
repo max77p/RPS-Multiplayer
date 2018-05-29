@@ -312,7 +312,7 @@ function bothPlayersSelected(el) {
       })
       $('.gameChoice1').hide();
       //TODO:show which was selected-done
-      
+
       //$('.playerOne').append(h4One);
     }
     else if (twoSelected) {
@@ -323,18 +323,18 @@ function bothPlayersSelected(el) {
       })
       $('.gameChoice2').hide();
       //TODO:show which was selected-done
-      
+
       //$('.playerTwo').append(h4Two);
     }
   }
 }
 //player 1 win or lost counter
-var p1Win=0;
-var p1Lost=0;
+var p1Win = 0;
+var p1Lost = 0;
 
 //player 1 win or lost counter
-var p2Win=0;
-var p2Lost=0;
+var p2Win = 0;
+var p2Lost = 0;
 players.on("value", function (snapshot) {
   console.log(snapshot.val());
   var p1 = snapshot.val().one['choice'];
@@ -344,7 +344,7 @@ players.on("value", function (snapshot) {
   var choiceDiv1 = $('<div class=currentChoice>');
   var choiceDiv2 = $('<div class=currentChoice>');
   var message = $('.message');
-  
+
 
   if (p1 && p2) {//game logic
     $('#p1Selection').empty();
@@ -355,17 +355,17 @@ players.on("value", function (snapshot) {
 
     if (results == p1) {
       message.text("Player one wins!");
-      p1Win+=1;//increase score by 1 for p1
-      p2Lost+=1;//increase loss by 1 for p2
-      $('#wins1').html("Wins: "+p1Win);
-      $('#loss2').html("Lost: "+p2Lost);
+      p1Win += 1;//increase score by 1 for p1
+      p2Lost += 1;//increase loss by 1 for p2
+      $('#wins1').html("Wins: " + p1Win);
+      $('#loss2').html("Lost: " + p2Lost);
     }
     else if (results == p2) {
       message.text("Player two wins!");
-      p2Win+=1;
-      p1Lost+=1;
-      $('#wins2').html("Wins: "+p2Win);
-      $('#loss1').html("Lost: "+p1Lost);
+      p2Win += 1;
+      p1Lost += 1;
+      $('#wins2').html("Wins: " + p2Win);
+      $('#loss1').html("Lost: " + p1Lost);
     }
     else {
       message.text("It's a tie!");
@@ -395,30 +395,29 @@ var quitGame1;
 $('.quitBtn').on("click", function (e) {
   e.preventDefault();
   e.stopPropagation();
+ 
+  //players.remove();
+  currentUser.update({
+    "userid": "",
+    "btn": "",
+    "user": ""
+  });
+  passUserName.update({
+    "u2": "",
+    "btn2": false,
+    "u1":"",
+    "btn1":false
+  })
+
+  $('.playClick1,.playClick2').show();
+
   quitGame1 = true;
-  quitGame();
-  quitGame1 = false;
+
 });
 
-function quitGame() {
-  players.on("child_added", function (snapshot) {
-    console.log(snapshot.val());
-    var u1 = snapshot.val().name;
-    var u2 = snapshot.val().name;
 
-    if (quitGame1) {
-      players.remove();
-      $('.gameChoice1').hide();
-      $('.gameChoice2').hide();
-      $('.playClick1').html("Press to Play");
-      $('.playClick2').html("Press to Play");
-      $('.playClick1').attr("data-name", undefined);
-      $('.playClick2').attr("data-name", undefined);
 
-    }
 
-  });
-}
 
 
 
@@ -492,7 +491,6 @@ function allowUser(uid, anon) {
       inputtext(uid, anon);
     }
   });
-
 
 }
 
