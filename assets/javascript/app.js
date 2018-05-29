@@ -213,6 +213,7 @@ function addP2Screen(elName, elId, elBtn) {
   var h2 = $('<h2>');
   elBtn.hide();
   h2.html(elName);
+  div.append(h2);
   $('.playerTwo').prepend(div);
   //$('.playClick1').attr("data-name", elName);
   p2.set({
