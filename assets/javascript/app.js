@@ -125,7 +125,7 @@ var u2ClkBtn;
 var currUID;
 var prevUID;
 
-
+$('.quitBtn').hide();
 $('.playClick1,.playClick2').on("click", function (e) {
   e.preventDefault();
   e.stopPropagation();
@@ -201,6 +201,11 @@ function addP1Screen(elName, elId, elBtn) {
   // h2.html(elName);
   // $('.playerOne').prepend(h2);
   //$('.playClick1').attr("data-name", elName);
+  var user = firebase.auth().currentUser;
+  if(user.displayName===elName){
+    $('.quitBtn').show();
+  }
+  
   p1.set({
     "losses": 0,
     "name": elName,
@@ -213,7 +218,10 @@ function addP1Screen(elName, elId, elBtn) {
 }
 
 function addP2Screen(elName, elId, elBtn) {
-
+  var user = firebase.auth().currentUser;
+  if(user.displayName===elName){
+    $('.quitBtn').show();
+  }
   //$('.playClick1').attr("data-name", elName);
   p2.set({
     "losses": 0,
@@ -266,9 +274,11 @@ function readyToPlay(elSnap) {//only show player 1 div, don't show player 2 div
 
   if (user.displayName == user1.name) {
     $('.gameChoice1').show();//show the respective game choice screen
+    
   }
   if (user.displayName == user2.name) {
     $('.gameChoice2').show();//show the respective game choice screen
+    $('.quitBtn').show();
   }
 
 }
@@ -391,18 +401,6 @@ players.on("value", function (snapshot) {
 
 });
 
-// p2.update({
-//   "wins": p2Win
-// })
-// p1.update({
-//   "losses": p1Lost
-// })
-// p1.update({
-//   "wins": p1Win
-// })
-// p2.update({
-//   "losses": p2Lost
-// })
 
 players.on("value", function (snapshot) {
   var p1Wins = snapshot.val().one.wins;
@@ -451,22 +449,14 @@ $('.quitBtn').on("click", function (e) {
     "btn1": false
   })
 
-  // p1.set({
-  //   "losses": 0,
-  //   "name": "",
-  //   "wins": 0
-  // })
-  // p2.set({
-  //   "losses": 0,
-  //   "name": "",
-  //   "wins": 0
-  // })
+ 
 
   p1.remove();
   p2.remove();
 
   
   //$('.playClick1,.playClick2').show();
+    $('.quitBtn').hide();
 
   quitGame1 = true;
 

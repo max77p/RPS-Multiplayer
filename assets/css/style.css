@@ -1,11 +1,12 @@
-body{
+body,html{
     font-family: 'Lato', sans-serif;
     font-size:1em;
-}
-.mainContainer{
-    max-height:100%;
-    max-width:100%;
 
+}
+
+.mainContainer{
+    min-height:100%;
+    max-width:100%;
     margin:1em;
     background-image: url("../images/wallpaper.jpg");
     background-repeat: no-repeat;
@@ -19,6 +20,9 @@ body{
 #title{
     /* margin:0 auto; */
     text-align:center;
+}
+#chatInput{
+    margin-top:1em;
 }
 
 .chatArea{
