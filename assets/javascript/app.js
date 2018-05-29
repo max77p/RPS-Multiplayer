@@ -465,7 +465,7 @@ $('.quitBtn').on("click", function (e) {
   p1.remove();
   p2.remove();
 
-  $('.gameChoice1,.gameChoice2').hide();
+  
   //$('.playClick1,.playClick2').show();
 
   quitGame1 = true;
@@ -480,6 +480,7 @@ button2=snapshot.val().btn2;
 console.log(button1);
 console.log(button2);
 if(button1==false && button2==false){
+  $('.gameChoice1,.gameChoice2').hide();
   $('.playClick1,.playClick2').show();
 }
 
