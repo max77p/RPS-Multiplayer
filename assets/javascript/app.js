@@ -208,7 +208,7 @@ function addP1Screen(elName, elId, elBtn) {
   })
   passUserName.update({
     "u1": elName,
-    "btn1":true
+    "btn1": true
   })
 }
 
@@ -222,22 +222,22 @@ function addP2Screen(elName, elId, elBtn) {
   })
   passUserName.update({
     "u2": elName,
-    "btn2":true
+    "btn2": true
   })
 }
 
 
-passUserName.on("value",function(snapshot){//keep username on page even if refreshed
+passUserName.on("value", function (snapshot) {//keep username on page even if refreshed
   console.log(snapshot.val());
-$('#nameOne').html(snapshot.val().u1);
-if(snapshot.val().btn1){
-  $('.playClick1').hide();
-}
+  $('#nameOne').html(snapshot.val().u1);
+  if (snapshot.val().btn1) {
+    $('.playClick1').hide();
+  }
 
-$('#nameTwo').html(snapshot.val().u2);
-if(snapshot.val().btn2){
-  $('.playClick2').hide();
-}
+  $('#nameTwo').html(snapshot.val().u2);
+  if (snapshot.val().btn2) {
+    $('.playClick2').hide();
+  }
 
 });
 
@@ -303,27 +303,32 @@ function bothPlayersSelected(el) {
   var user = firebase.auth().currentUser;
   //var h4One = $('<h4 class="showChoice">');
   //var h4Two = $('<h4 class="showChoice">');
-  if (oneSelected) {
-    console.log(oneSelected);
-    p1.update({
-      "choice": el
-    })
-    $('.gameChoice1').hide();
-    //TODO:show which was selected-done
-    $('#p1Selection').html(el);
-    //$('.playerOne').append(h4One);
+  if (oneSelected || twoSelected) {
+    if (oneSelected) {
+      console.log(oneSelected);
+      $('#p1Selection').html(el);
+      p1.update({
+        "choice": el
+      })
+      $('.gameChoice1').hide();
+      //TODO:show which was selected-done
+      
+      //$('.playerOne').append(h4One);
+    }
+    else if (twoSelected) {
+      console.log(twoSelected);
+      $('#p2Selection').html(el);
+      p2.update({
+        "choice": el
+      })
+      $('.gameChoice2').hide();
+      //TODO:show which was selected-done
+      
+      //$('.playerTwo').append(h4Two);
+    }
   }
 
-  if (twoSelected) {
-    console.log(twoSelected);
-    p2.update({
-      "choice": el
-    })
-    $('.gameChoice2').hide();
-    //TODO:show which was selected-done
-    $('#p2Selection').html(el);
-    //$('.playerTwo').append(h4Two);
-  }
+
 }
 
 players.on("value", function (snapshot) {
@@ -335,23 +340,23 @@ players.on("value", function (snapshot) {
   var choiceDiv1 = $('<div class=currentChoice>');
   var choiceDiv2 = $('<div class=currentChoice>');
   var message = $('.message');
-  $('#p1Selection').empty();
-  $('#p2Selection').empty();
+  
 
   if (p1 && p2) {//game logic
-    
+    $('#p1Selection').empty();
+    $('#p2Selection').empty();
     $('.gameChoice1,.gameChoice2').hide();
-    
+
     var results = compare(p1, p2);
 
     if (results == p1) {
-      message.text("player one wins!");
+      message.text("Player one wins!");
     }
     else if (results == p2) {
-      message.text("player two wins!");
+      message.text("Player two wins!");
     }
     else {
-      message.text("Its a tie!");
+      message.text("It's a tie!");
     }
     $('.playerOne').append(choiceDiv1.html(p1));
     $('.playerTwo').append(choiceDiv2.html(p2));
