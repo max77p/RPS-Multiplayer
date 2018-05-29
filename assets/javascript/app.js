@@ -359,6 +359,12 @@ players.on("value", function (snapshot) {
       p2Lost += 1;//increase loss by 1 for p2
       $('#wins1').html("Wins: " + p1Win);
       $('#loss2').html("Lost: " + p2Lost);
+      p1.update({
+        "wins":p1Win
+      })
+      p2.update({
+        "losses":p2Lost
+      })
     }
     else if (results == p2) {
       message.text("Player two wins!");
@@ -366,6 +372,12 @@ players.on("value", function (snapshot) {
       p1Lost += 1;
       $('#wins2').html("Wins: " + p2Win);
       $('#loss1').html("Lost: " + p1Lost);
+      p2.update({
+        "wins":p2Win
+      })
+      p1.update({
+        "losses":p1Lost
+      })
     }
     else {
       message.text("It's a tie!");
@@ -395,7 +407,7 @@ var quitGame1;
 $('.quitBtn').on("click", function (e) {
   e.preventDefault();
   e.stopPropagation();
- 
+
   //players.remove();
   currentUser.update({
     "userid": "",
@@ -405,16 +417,17 @@ $('.quitBtn').on("click", function (e) {
   passUserName.update({
     "u2": "",
     "btn2": false,
-    "u1":"",
-    "btn1":false
+    "u1": "",
+    "btn1": false
   })
 
+$('.gameChoice1,.gameChoice2').hide();
   $('.playClick1,.playClick2').show();
+ 
 
   quitGame1 = true;
 
 });
-
 
 
 
@@ -452,6 +465,16 @@ var compare = function (choice1, choice2) {
   else if (choice2 === "Scissors" && choice2 === "Paper") {
     return choice2;
   }
+
+  if (choice1 === "Paper" && choice2 === "Scissors") {
+    //scissors wins
+    return choice1;
+  }
+  else if (choice2 === "Scissors" && choice2 === "Paper") {
+    return choice2;
+  }
+
+
 
 };
 

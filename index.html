@@ -8,11 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css" />
-    <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
 </head>
 
@@ -26,6 +27,18 @@
 
         <div class="row">
             <div class="col-md-6 leftChat">
+                <form class="nameForm">
+                    <div class="startForm">
+                        <input type="text" class="form-control" id="nameInput" placeholder="Enter your name">
+                        <small id="emailHelp" class="form-text text-muted">Please only change your after quitting a game in progress</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary startBtn">Submit Name</button>
+                </form>
+                <!-- <input type="text" class="form-control" id="quitGame" placeholder="Y/N and press enter"> -->
+                <button type="submit" class="btn btn-primary quitBtn">Press to Quit</button>
+            </div>
+            <div class="col-md-6 rightStart">
+
                 <div class="chatSection">
                     <div class="chatArea">
 
@@ -39,22 +52,8 @@
                         </div>
                     </form>
                 </div>
-            </div>
-            <div class="col-md-6 rightStart">
-                
-                    <form class="nameForm">
-                        <div class="startForm">
-                            <input type="text" class="form-control" id="nameInput" placeholder="Enter your name">
-                            <small id="emailHelp" class="form-text text-muted">Please only change your after quitting a game in progress</small>
-                        </div>
-                        <button type="submit" class="btn btn-primary startBtn">Submit Name</button>
-                    </form>
-                        
-                        <!-- <input type="text" class="form-control" id="quitGame" placeholder="Y/N and press enter"> -->
-                        <button type="submit" class="btn btn-primary quitBtn">Press to quit</button>
-                    
-                    
-               
+
+
             </div>
 
 
