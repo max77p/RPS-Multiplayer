@@ -34,32 +34,32 @@ var passUserName = database.ref("twoUsers");
 
 
 
-connectedRef.on("value", function (snap) {
-  // If they are connected..
-  //console.log(snap);
+// connectedRef.on("value", function (snap) {
+//   // If they are connected..
+//   //console.log(snap);
 
-  if (snap.val()) {
-    // Add user to the connections list.
+//   if (snap.val()) {
+//     // Add user to the connections list.
 
-    var con = connectionsRef;
+//     var con = connectionsRef;
 
-    var con = connectionsRef.push(true);
-    //addUser(con);
-    // Remove user from the connection list when they disconnect.
-    con.onDisconnect().remove();
-  }
+//     var con = connectionsRef.push(true);
+//     //addUser(con);
+//     // Remove user from the connection list when they disconnect.
+//     con.onDisconnect().remove();
+//   }
 
 
-});
+// });
 
-connectionsRef.on("value", function (snap) {
-  // Display the viewer count in the html.
-  $("#userList").html("current number of users: " + snap.numChildren());
-  console.log(snap.val());
+// connectionsRef.on("value", function (snap) {
+//   // Display the viewer count in the html.
+//   $("#userList").html("current number of users: " + snap.numChildren());
+//   console.log(snap.val());
 
-  // The number of online users is the number of children in the connections list.
-  console.log(snap.numChildren());
-});
+//   // The number of online users is the number of children in the connections list.
+//   console.log(snap.numChildren());
+// });
 
 
 
@@ -335,7 +335,6 @@ var p1Lost=0;
 //player 1 win or lost counter
 var p2Win=0;
 var p2Lost=0;
-
 players.on("value", function (snapshot) {
   console.log(snapshot.val());
   var p1 = snapshot.val().one['choice'];

@@ -65,20 +65,26 @@ max-width:100%;
     align-items: center;
     height:100%;
 }
-.game{
+.game1,.game2{
     width:100%;
-    height:100%;
+    /* height:100%; */
     text-align:center;
 }
 #nameOne{
     margin:0;
+    position: absolute;
+    top: 0;
 }
 #nameTwo{
     margin:0;
+    position: absolute;
+    top: 0;
 }
 .counter{
     width:50%;
     display:flex;
     justify-content: space-between;
     align-items:flex-end;
+    position: absolute;
+    bottom: 0;
 }
