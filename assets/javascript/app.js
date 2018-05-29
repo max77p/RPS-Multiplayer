@@ -182,12 +182,12 @@ currentUser.on("value", function (snapshot) {
 
   if (clickedClass1.hasClass(clicked)) {
     console.log("btn 1 binded!");
-    //$('.playClick1').hide();
+    $('.playClick1').hide();
     addP1Screen(username, userid, clickedClass1);
   }
   else if (clickedClass2.hasClass(clicked)) {
     console.log("btn 2 binded!");
-    //$('.playClick2').hide();
+    $('.playClick2').hide();
     addP2Screen(username, userid, clickedClass2);
   }
 
