@@ -122,8 +122,7 @@ function getPlayer() {
   }
 }
 
-var u1ClkBtn;
-var u2ClkBtn;
+
 var currUID;
 var prevUID;
 
@@ -134,8 +133,13 @@ $('.playClick1,.playClick2').on("click", function (e) {
 
   var userplay = firebase.auth().currentUser;
   console.log(userplay.uid);
+  console.log(userplay.displayName);//if null
   if (userplay.uid === prevUID) {
     alert("try again");
+  }
+  else if(userplay.displayName===null){
+    alert("please enter a name before proceeding");
+    return;
   }
   else {
     if (donotallow) {
