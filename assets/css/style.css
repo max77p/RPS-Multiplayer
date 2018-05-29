@@ -5,6 +5,7 @@ body{
 .mainContainer{
     max-height:100%;
     max-width:100%;
+    min-width:100%;
     margin:1em;
     background-image: url("../images/wallpaper.jpg");
     background-repeat: no-repeat;
@@ -58,7 +59,7 @@ body{
 
 .chatArea{
     text-align:right;
-    background-color: rgba(88, 85, 85, 0.16);
+    background-color: rgba(230, 230, 230, 0.89);
     box-shadow: inset 0px 0px 0px 0px rgba(0,0,0,.075);
 }
 
@@ -78,7 +79,7 @@ body{
 
 input{
     box-shadow: inset 4px -12px 20px 20px rgba(0,0,0,.075) !important;
-    background-color:transparent !important;
+    background-color: #fdfdfde0 !important;
 }
 .startBtn,.quitBtn{
     /* width:50%; */
