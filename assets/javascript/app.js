@@ -70,14 +70,16 @@ firebase.auth().signInAnonymously().catch(function (error) {
   // ...
 });
 
-$('.playClick1,.playClick2').hide();
+
 firebase.auth().onAuthStateChanged(function (user) {
   console.log(user);
 
   if (user) {
     var isAnonymous = user.isAnonymous;
     var uid = user.uid;
-    alert("Please enter your name to play");
+
+    allowUser(uid, isAnonymous);
+    
 
     userDB.child(uid).onDisconnect().remove();
 
@@ -85,22 +87,22 @@ firebase.auth().onAuthStateChanged(function (user) {
     //disconnected
     allowUser.onDisconnect().remove();
   }
-
-
-
-  $("#nameInput").keypress(function (event) {
-    // Grabbed values from text boxes
-    if (event.which === 13) {
-      event.preventDefault();
-      getPlayer(uid,isAnonymous);
-    }
-  });
-
-  $('.startBtn').on("click", function (e) {//submit name button
-    e.preventDefault();
-    getPlayer(uid,isAnonymous);
-  })
 });
+
+
+$("#nameInput").keypress(function (event) {
+  // Grabbed values from text boxes
+  if (event.which === 13) {
+    event.preventDefault();
+    getPlayer();
+  }
+});
+
+$('.startBtn').on("click", function (e) {//submit name button
+  e.preventDefault();
+  getPlayer();
+})
+
 
 function getPlayer() {
   var user = firebase.auth().currentUser;
@@ -113,8 +115,7 @@ function getPlayer() {
       displayName: getname
     }).then(function () {
       $('#nameInput').val('');
-      $('.playClick1,.playClick2').show();
-      allowUser(uid, isAnonymous);
+      
     }).catch(function (error) {
       // An error happened.
     });
@@ -203,10 +204,10 @@ function addP1Screen(elName, elId, elBtn) {
   // $('.playerOne').prepend(h2);
   //$('.playClick1').attr("data-name", elName);
   var user = firebase.auth().currentUser;
-  if (user.displayName === elName) {
+  if(user.displayName===elName){
     $('.quitBtn').show();
   }
-
+  
   p1.set({
     "losses": 0,
     "name": elName,
@@ -220,7 +221,7 @@ function addP1Screen(elName, elId, elBtn) {
 
 function addP2Screen(elName, elId, elBtn) {
   var user = firebase.auth().currentUser;
-  if (user.displayName === elName) {
+  if(user.displayName===elName){
     $('.quitBtn').show();
   }
   //$('.playClick1').attr("data-name", elName);
@@ -426,8 +427,8 @@ players.on("value", function (snapshot) {
 
   $('#loss1').html("Lost: " + p1Loss);
   $('#loss2').html("Lost: " + p2Loss);
-
-
+ 
+      
 });
 
 
@@ -449,15 +450,15 @@ $('.quitBtn').on("click", function (e) {
   e.preventDefault();
   e.stopPropagation();
 
-  resetEntireGame();
+resetEntireGame();
   //players.remove();
-
+ 
   quitGame1 = true;
 
 });
 
-function resetEntireGame() {
-
+function resetEntireGame(){
+  
   currentUser.set({
     "userid": "",
     "btn": "",
@@ -481,16 +482,16 @@ function resetEntireGame() {
 }
 
 
-passUserName.on("value", function (snapshot) {
-  console.log(snapshot.val());
-  button1 = snapshot.val().btn1;
-  button2 = snapshot.val().btn2;
-  console.log(button1);
-  console.log(button2);
-  if (button1 == false && button2 == false) {
-    $('.gameChoice1,.gameChoice2').hide();
-    $('.playClick1,.playClick2').show();
-  }
+passUserName.on("value",function(snapshot){
+console.log(snapshot.val());
+button1=snapshot.val().btn1;
+button2=snapshot.val().btn2;
+console.log(button1);
+console.log(button2);
+if(button1==false && button2==false){
+  $('.gameChoice1,.gameChoice2').hide();
+  $('.playClick1,.playClick2').show();
+}
 
 });
 
