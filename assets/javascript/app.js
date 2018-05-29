@@ -354,38 +354,32 @@ players.on("value", function (snapshot) {
 
     var results = compare(p1Choice, p2Choice);
 
-    if (results == p1Choice) {
+    if (results === p1Choice) {
       message.text("Player one wins!");
       p1Win += 1;//increase score by 1 for p1
       p2Lost += 1;//increase loss by 1 for p2
-      $('#wins1').html("Wins: " + p1Win);
-      $('#loss2').html("Lost: " + p2Lost);
-      // p1.update({
-      //   "wins": p1Win
-      // })
-      // p2.update({
-      //   "losses": p2Lost
-      // })
+      // $('#wins1').html("Wins: " + p1Win);
+      // $('#loss2').html("Lost: " + p2Lost);
+
     }
-    else if (results == p2Choice) {
+    else if (results === p2Choice) {
       message.text("Player two wins!");
       p2Win += 1;
       p1Lost += 1;
-      $('#wins2').html("Wins: " + p2Win);
-      $('#loss1').html("Lost: " + p1Lost);
-      // p2.update({
-      //   "wins": p2Win
-      // })
-      // p1.update({
-      //   "losses": p1Lost
-      // })
+      // $('#wins2').html("Wins: " + p2Win);
+      // $('#loss1').html("Lost: " + p1Lost);
+
     }
 
     else if (p1Choice === p2Choice) {
       message.text("It's a tie!");
     }
+
     $('.playerOne').append(choiceDiv1.html(p1Choice));
     $('.playerTwo').append(choiceDiv2.html(p2Choice));
+
+
+
 
     setTimeout(function () {//after 5 seconds remove and reset
       readyToPlay(snapshot)
@@ -394,14 +388,48 @@ players.on("value", function (snapshot) {
       clearUpdate();
     }, 3000)
   }
+
 });
+
+// p2.update({
+//   "wins": p2Win
+// })
+// p1.update({
+//   "losses": p1Lost
+// })
+// p1.update({
+//   "wins": p1Win
+// })
+// p2.update({
+//   "losses": p2Lost
+// })
+
+players.on("value", function (snapshot) {
+  var p1Wins = snapshot.val().one.wins;
+  var p2Wins = snapshot.val().two.wins;
+  var p1Loss = snapshot.val().one.losses;
+  var p2Loss = snapshot.val().two.losses;
+
+  $('#wins1').html("Wins: " + p1Wins);
+  $('#wins2').html("Wins: " + p2Wins);
+
+  $('#loss1').html("Lost: " + p1Loss);
+  $('#loss2').html("Lost: " + p2Loss);
+ 
+      
+});
+
 
 function clearUpdate() {
   p1.update({
-    "choice": ""
+    "choice": "",
+    "losses": p1Lost,
+    "wins": p1Win
   })
   p2.update({
-    "choice": ""
+    "choice": "",
+    "losses": p2Lost,
+    "wins": p2Win
   })
 }
 
