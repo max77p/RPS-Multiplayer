@@ -230,13 +230,17 @@ function addP2Screen(elName, elId, elBtn) {
 }
 
 
-passUserName.on("value",function(snapshot){
+passUserName.once("value",function(snapshot){
 var one=snapshot.val().u1;
 var two=snapshot.val().u2;
 console.log(one);
 console.log(two);
+if(two){
 $('.playClick1').hide();
+}
+if(one){
 $('.playClick2').hide();
+}
 var h21 = $('<h2 class="userName">');
 var h22 = $('<h2 class="userName">');
 
