@@ -32,35 +32,35 @@ var p2 = players.child("two");
 
 var passUserName = database.ref("twoUsers");
 
-restartGame();
-function restartGame() {
-  connectedRef.on("value", function (snap) {
-    // If they are connected..
-    //console.log(snap);
-
-    if (snap.val()) {
-      // Add user to the connections list.
-
-      var con = connectionsRef;
-
-      var con = connectionsRef.push(true);
-      //addUser(con);
-      // Remove user from the connection list when they disconnect.
-      con.onDisconnect().remove();
-    }
 
 
-  });
+connectedRef.on("value", function (snap) {
+  // If they are connected..
+  //console.log(snap);
 
-  connectionsRef.on("value", function (snap) {
-    // Display the viewer count in the html.
-    $("#userList").html("current number of users: " + snap.numChildren());
-    console.log(snap.val());
+  if (snap.val()) {
+    // Add user to the connections list.
 
-    // The number of online users is the number of children in the connections list.
-    console.log(snap.numChildren());
-  });
-}
+    var con = connectionsRef;
+
+    var con = connectionsRef.push(true);
+    //addUser(con);
+    // Remove user from the connection list when they disconnect.
+    con.onDisconnect().remove();
+  }
+
+
+});
+
+connectionsRef.on("value", function (snap) {
+  // Display the viewer count in the html.
+  $("#userList").html("current number of users: " + snap.numChildren());
+  console.log(snap.val());
+
+  // The number of online users is the number of children in the connections list.
+  console.log(snap.numChildren());
+});
+
 
 
 firebase.auth().signInAnonymously().catch(function (error) {
@@ -182,12 +182,10 @@ currentUser.on("value", function (snapshot) {
 
   if (clickedClass1.hasClass(clicked)) {
     console.log("btn 1 binded!");
-    $('.playClick1').hide();
     addP1Screen(username, userid, clickedClass1);
   }
   else if (clickedClass2.hasClass(clicked)) {
     console.log("btn 2 binded!");
-    $('.playClick2').hide();
     addP2Screen(username, userid, clickedClass2);
   }
 
@@ -199,7 +197,7 @@ $('.gameChoice2').hide();
 //TODO: add names to screen and remove buttons
 function addP1Screen(elName, elId, elBtn) {
   // var h2 = $('<h2 class="userName">');
-  // elBtn.hide();
+  // $('.playClick1').hide();
   // h2.html(elName);
   // $('.playerOne').prepend(h2);
   //$('.playClick1').attr("data-name", elName);
@@ -209,15 +207,13 @@ function addP1Screen(elName, elId, elBtn) {
     "wins": 0
   })
   passUserName.update({
-    "u1": elName
+    "u1": elName,
+    "btn1":true
   })
 }
 
 function addP2Screen(elName, elId, elBtn) {
-  // var h2 = $('<h2 class="userName">');
-  // elBtn.hide();
-  // h2.html(elName);
-  // $('.playerTwo').prepend(h2);
+
   //$('.playClick1').attr("data-name", elName);
   p2.set({
     "losses": 0,
@@ -225,35 +221,29 @@ function addP2Screen(elName, elId, elBtn) {
     "wins": 0
   })
   passUserName.update({
-    "u2": elName
+    "u2": elName,
+    "btn2":true
   })
 }
 
 
-passUserName.on("value", function (snapshot) {
-  if (readyPlay) {
-    return;
-  }
-  var one = snapshot.val().u1;
-  
-  console.log(one);
-  console.log(two);
+passUserName.on("value",function(snapshot){
+  console.log(snapshot.val());
+$('#nameOne').html(snapshot.val().u1);
+if(snapshot.val().btn1){
+  $('.playClick1').hide();
+}
 
-  
-  if (one) {
-    var h21 = $('<h2 class="userName">');
-    $('.playClick1').hide();
-    h21.html(one);
-    $('.playerOne').prepend(h21);
-  }
-  var two = snapshot.val().u2;
-  if (two) {
-    var h22 = $('<h2 class="userName">');
-    $('.playClick2').hide();
-    h22.html(two);
-    $('.playerTwo').prepend(h22);
-  }
+$('#nameTwo').html(snapshot.val().u2);
+if(snapshot.val().btn2){
+  $('.playClick2').hide();
+}
+
 });
+
+
+
+
 
 
 
@@ -412,9 +402,7 @@ function quitGame() {
       $('.playClick2').html("Press to Play");
       $('.playClick1').attr("data-name", undefined);
       $('.playClick2').attr("data-name", undefined);
-      u1ClkBtn = false;
-      u2ClkBtn = false;
-      restartGame();
+
     }
 
   });
