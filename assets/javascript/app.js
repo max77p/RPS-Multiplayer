@@ -182,12 +182,12 @@ currentUser.on("value", function (snapshot) {
 
   if (clickedClass1.hasClass(clicked)) {
     console.log("btn 1 binded!");
-    $('.playClick1').hide();
+    //$('.playClick1').hide();
     addP1Screen(username, userid, clickedClass1);
   }
   else if (clickedClass2.hasClass(clicked)) {
     console.log("btn 2 binded!");
-    $('.playClick2').hide();
+    //$('.playClick2').hide();
     addP2Screen(username, userid, clickedClass2);
   }
 
@@ -231,7 +231,7 @@ function addP2Screen(elName, elId, elBtn) {
 
 
 passUserName.on("value", function (snapshot) {
-  if(readyPlay){
+  if (readyPlay) {
     return;
   }
   var one = snapshot.val().u1;
@@ -239,18 +239,20 @@ passUserName.on("value", function (snapshot) {
   console.log(one);
   console.log(two);
 
-  var h21 = $('<h2 class="userName">');
+  
+  if (one) {
+    var h21 = $('<h2 class="userName">');
+    $('.playClick1').hide();
+    h21.html(one);
+    $('.playerOne').prepend(h21);
+  }
 
-  $('.playClick1').hide();
-  h21.html(one);
-  $('.playerOne').prepend(h21);
-
-
-  var h22 = $('<h2 class="userName">');
-  $('.playClick2').hide();
-  h22.html(two);
-  $('.playerTwo').prepend(h22);
-
+  if (two) {
+    var h22 = $('<h2 class="userName">');
+    $('.playClick2').hide();
+    h22.html(two);
+    $('.playerTwo').prepend(h22);
+  }
 });
 
 
@@ -265,7 +267,7 @@ players.on("value", function (snapshot) {//start the game if both players clicke
   console.log(gameTime);
   console.log(snapshot.val());
   if (gameTime == 2) {
-      readyPlay=true;
+    readyPlay = true;
     readyToPlay(snapshot);
   }
 });
