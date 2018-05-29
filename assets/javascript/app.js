@@ -420,10 +420,19 @@ $('.quitBtn').on("click", function (e) {
     "u1": "",
     "btn1": false
   })
+  p1.update({
+    "losses": 0,
+    "name": "",
+    "wins": 0
+  })
+  p2.update({
+    "losses": 0,
+    "name": "",
+    "wins": 0
+  })
 
 $('.gameChoice1,.gameChoice2').hide();
   $('.playClick1,.playClick2').show();
- 
 
   quitGame1 = true;
 
