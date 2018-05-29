@@ -458,8 +458,8 @@ var compare = function (choice1, choice2) {
   else if (choice2 === "Rock" && choice1 === "Scissors") {
     return choice2;
   }
-
-  if (choice1 === "Paper" && choice2 === "Rock") {
+ 
+  else if (choice1 === "Paper" && choice2 === "Rock") {
     // paper wins
     return choice1;
   }
@@ -467,22 +467,13 @@ var compare = function (choice1, choice2) {
     return choice2;
   }
 
-  if (choice1 === "Scissors" && choice2 === "Paper") {
+  else if (choice1 === "Scissors" && choice2 === "Paper") {
     //scissors wins
     return choice1;
   }
-  else if (choice2 === "Scissors" && choice2 === "Paper") {
+  else if (choice2 === "Scissors" && choice1 === "Paper") {
     return choice2;
   }
-
-  if (choice1 === "Paper" && choice2 === "Scissors") {
-    //scissors wins
-    return choice1;
-  }
-  else if (choice2 === "Scissors" && choice2 === "Paper") {
-    return choice2;
-  }
-
 
 
 };
