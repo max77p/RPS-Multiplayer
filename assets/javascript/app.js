@@ -230,25 +230,29 @@ function addP2Screen(elName, elId, elBtn) {
 }
 
 
-passUserName.once("value",function(snapshot){
+passUserName.on("value",function(snapshot){
 var one=snapshot.val().u1;
 var two=snapshot.val().u2;
 console.log(one);
 console.log(two);
-if(two){
-$('.playClick1').hide();
-}
 if(one){
-$('.playClick2').hide();
-}
-var h21 = $('<h2 class="userName">');
-var h22 = $('<h2 class="userName">');
+  var h21 = $('<h2 class="userName">');
 
-  h21.html(one);
+$('.playClick1').hide();
+h21.html(one);
   $('.playerOne').prepend(h21);
-
-  h22.html(two);
+}
+if(two){
+  var h22 = $('<h2 class="userName">');
+$('.playClick2').hide();
+h22.html(two);
   $('.playerTwo').prepend(h22);
+}
+
+
+  
+
+  
 
 });
 
