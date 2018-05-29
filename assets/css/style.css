@@ -5,7 +5,7 @@ body{
 .mainContainer{
     max-height:100%;
     max-width:100%;
-    min-width:100%;
+
     margin:1em;
     background-image: url("../images/wallpaper.jpg");
     background-repeat: no-repeat;
@@ -64,7 +64,8 @@ body{
 }
 
 .innerBox{
-    border:1px dashed rgb(129, 127, 127);
+    background-color: #dedede73;
+    border-radius:20px 20px;
     height:10em;
 }
 
@@ -145,6 +146,14 @@ width: 10em;
     align-items:flex-end;
     position: absolute;
     bottom: 0;
+}
+
+#emailHelp{
+    color:black;
+}
+
+#wins1,#wins2,#loss1,#loss2{
+    font-size:1em;
 }
 @media only screen and (max-width: 540px) {
     .counter {
