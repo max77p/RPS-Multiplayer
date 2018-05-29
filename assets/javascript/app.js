@@ -227,7 +227,7 @@ function addP2Screen(elName, elId, elBtn) {
 }
 
 
-passUserName.on("value",function(snapshot){
+passUserName.on("value",function(snapshot){//keep username on page even if refreshed
   console.log(snapshot.val());
 $('#nameOne').html(snapshot.val().u1);
 if(snapshot.val().btn1){
@@ -240,11 +240,6 @@ if(snapshot.val().btn2){
 }
 
 });
-
-
-
-
-
 
 
 
@@ -315,8 +310,8 @@ function bothPlayersSelected(el) {
     })
     $('.gameChoice1').hide();
     //TODO:show which was selected
-    h4One.html(el);
-    $('.playerOne').append(h4One);
+    $('#p1Selection').html(el);
+    //$('.playerOne').append(h4One);
   }
 
   if (twoSelected) {
@@ -326,8 +321,8 @@ function bothPlayersSelected(el) {
     })
     $('.gameChoice2').hide();
     //TODO:show which was selected
-    h4Two.html(el);
-    $('.playerTwo').append(h4Two);
+    $('#p2Selection').html(el);
+    //$('.playerTwo').append(h4Two);
   }
 }
 
