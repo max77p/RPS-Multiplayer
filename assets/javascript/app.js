@@ -466,13 +466,24 @@ $('.quitBtn').on("click", function (e) {
   p2.remove();
 
   $('.gameChoice1,.gameChoice2').hide();
-  $('.playClick1,.playClick2').show();
+  //$('.playClick1,.playClick2').show();
 
   quitGame1 = true;
 
 });
 
 
+passUserName.on("value",function(snapshot){
+console.log(snapshot.val());
+button1=snapshot.val().btn1;
+button2=snapshot.val().btn2;
+console.log(button1);
+console.log(button2);
+if(button1==false && button2==false){
+  $('.playClick1,.playClick2').show();
+}
+
+});
 
 
 
