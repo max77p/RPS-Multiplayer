@@ -327,9 +327,14 @@ function bothPlayersSelected(el) {
       //$('.playerTwo').append(h4Two);
     }
   }
-
-
 }
+//player 1 win or lost counter
+var p1Win=0;
+var p1Lost=0;
+
+//player 1 win or lost counter
+var p2Win=0;
+var p2Lost=0;
 
 players.on("value", function (snapshot) {
   console.log(snapshot.val());
@@ -368,8 +373,6 @@ players.on("value", function (snapshot) {
       clearUpdate();
     }, 3000)
   }
-
-
 });
 
 function clearUpdate() {

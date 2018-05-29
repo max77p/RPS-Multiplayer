@@ -34,13 +34,13 @@ max-width:100%;
     display:inline-block;
 }
 
-.gameChoice1,.gameChoice2{
+/* .gameChoice1,.gameChoice2{
     display:flex;
     flex-direction:column;
     border:1px solid black;
     width:100%;
     height:33.33%;
-}
+} */
 
 .playerOne,.playerTwo,.gameMessage{
     display:flex;
@@ -65,5 +65,20 @@ max-width:100%;
     align-items: center;
     height:100%;
 }
-.userName{
+.game{
+    width:100%;
+    height:100%;
+    text-align:center;
+}
+#nameOne{
+    margin:0;
+}
+#nameTwo{
+    margin:0;
+}
+.counter{
+    width:50%;
+    display:flex;
+    justify-content: space-between;
+    align-items:flex-end;
 }
