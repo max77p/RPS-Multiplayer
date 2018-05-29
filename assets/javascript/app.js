@@ -138,12 +138,12 @@ $('.playClick1,.playClick2').on("click", function (e) {
       return;
     }
     else {
-      currentUser.update({
+      currentUser.set({
         "userid": userplay.uid,
         "btn": e.target.classList[3],
         "user": userplay.displayName
       })
-     
+
     }
   }
 });
@@ -196,28 +196,28 @@ $('.gameChoice2').hide();
 
 //TODO: add names to screen and remove buttons
 function addP1Screen(elName, elId, elBtn) {
-  var h2 = $('<h2 class="userName">');
-  elBtn.hide();
-  h2.html(elName);
-  $('.playerOne').prepend(h2);
+  // var h2 = $('<h2 class="userName">');
+  //elBtn.hide();
+  // h2.html(elName);
+  // $('.playerOne').prepend(h2);
   //$('.playClick1').attr("data-name", elName);
   p1.set({
-    "losses":0,
-    "name":elName,
-    "wins":0
+    "losses": 0,
+    "name": elName,
+    "wins": 0
   })
 }
 
 function addP2Screen(elName, elId, elBtn) {
-  var h2 = $('<h2 class="userName">');
-  elBtn.hide();
-  h2.html(elName);
-  $('.playerTwo').prepend(h2);
+  // var h2 = $('<h2 class="userName">');
+  //elBtn.hide();
+  // h2.html(elName);
+  // $('.playerTwo').prepend(h2);
   //$('.playClick1').attr("data-name", elName);
   p2.set({
-    "losses":0,
-    "name":elName,
-    "wins":0
+    "losses": 0,
+    "name": elName,
+    "wins": 0
   })
 }
 
@@ -225,6 +225,25 @@ function addP2Screen(elName, elId, elBtn) {
 var readyPlay;
 players.on("value", function (snapshot) {//start the game if both players clicked
   var gameTime = snapshot.numChildren();
+  var one=snapshot.val()['one'];
+  console.log(one);
+  var two=snapshot.val()['two'];
+  console.log(two);
+  
+  
+if(one){
+  var h2 = $('<h2 class="userName">');
+  h2.html(one.name);
+  $('.playerOne').prepend(h2);
+}
+if(two){
+  var h2 = $('<h2 class="userName">');
+  h2.html(two.name);
+  $('.playerTwo').prepend(h2);
+}
+
+
+console.log(snapshot.val());
   console.log(gameTime);
   console.log(snapshot.val());
   if (gameTime == 2) {
@@ -276,7 +295,8 @@ $('.gameChoice2').on("click", function (e) {
 
 function bothPlayersSelected(el) {
   var user = firebase.auth().currentUser;
-
+  var h4One = $('<h4 class="showChoice">');
+  var h4Two=$('<h4 class="showChoice">');
   if (oneSelected) {
     console.log(oneSelected);
     p1.update({
@@ -284,7 +304,8 @@ function bothPlayersSelected(el) {
     })
     $('.gameChoice1').hide();
     //TODO:show which was selected
-
+    h4One.html(el);
+    $('.playerOne').append(h4One);
   }
 
   if (twoSelected) {
@@ -294,6 +315,8 @@ function bothPlayersSelected(el) {
     })
     $('.gameChoice2').hide();
     //TODO:show which was selected
+    h4Two.html(el);
+    $('.playerTwo').append(h4Two);
   }
 }
 
@@ -310,6 +333,7 @@ players.on("value", function (snapshot) {
 
   if (p1 && p2) {//game logic
     $('.gameChoice1,.gameChoice2').hide();
+    $('.showChoice').remove();
     var results = compare(p1, p2);
 
     if (results == p1) {
