@@ -224,23 +224,24 @@ var readyPlay;
 players.on("value", function (snapshot) {//start the game if both players clicked
   var gameTime = snapshot.numChildren();
   console.log(gameTime);
+  console.log(snapshot.val());
   if (gameTime == 2) {
     readyToPlay(snapshot);
   }
 });
 
 function readyToPlay(elSnap) {//only show player 1 div, don't show player 2 div
-  var user1 = elSnap.val()['one'];
+  var user1 = elSnap.val()['one'];//first player
   //console.log(user1.name);
-  var user2 = elSnap.val()['two'];
+  var user2 = elSnap.val()['two'];//second player
   var user = firebase.auth().currentUser;
   //console.log(user);
 
   if (user.displayName == user1.name) {
-    $('.gameChoice1').show();
+    $('.gameChoice1').show();//show the respective game choice screen
   }
   else if (user.displayName == user2.name) {
-    $('.gameChoice2').show();
+    $('.gameChoice2').show();//show the respective game choice screen
   }
 
 }
@@ -252,7 +253,7 @@ var twoSelected = false;
 $('.gameChoice1').on("click", function (e) {
   e.preventDefault();
   e.stopPropagation();
-  console.log($(this));
+  //console.log($(this));
   var user1Choice = $(this)[0].innerText.trim();
   console.log(user1Choice);
   oneSelected = true;
@@ -280,27 +281,32 @@ function bothPlayersSelected(el) {
       "choice": el
     })
     $('.gameChoice1').hide();
+    //TODO:show which was selected
 
   }
+
   if (twoSelected) {
     console.log(twoSelected);
     p2.update({
       "choice": el
     })
     $('.gameChoice2').hide();
+    //TODO:show which was selected
   }
 }
 
 players.on("value", function (snapshot) {
   console.log(snapshot.val());
   var p1 = snapshot.val().one['choice'];
-  console.log(p1);
+  //console.log(p1);
   var p2 = snapshot.val().two['choice'];
-  console.log(p2);
+  //console.log(p2);
   var choiceDiv1 = $('<div class=currentChoice>');
   var choiceDiv2 = $('<div class=currentChoice>');
   var message = $('.message');
-  if (p1 && p2) {
+
+
+  if (p1 && p2) {//game logic
     $('.gameChoice1,.gameChoice2').hide();
     var results = compare(p1, p2);
 
@@ -321,8 +327,10 @@ players.on("value", function (snapshot) {
       $('.currentChoice').remove();
       message.text("");
       clearUpdate();
-    }, 2000)
+    }, 3000)
   }
+
+
 });
 
 function clearUpdate() {
