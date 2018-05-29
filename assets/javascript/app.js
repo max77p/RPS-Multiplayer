@@ -364,8 +364,6 @@ players.on("value", function (snapshot) {
     setTimeout(function () {//after 5 seconds remove and reset
       readyToPlay(snapshot)
       $('.currentChoice').remove();
-      $('#p1Selection').empty();
-      $('#p2Selection').empty();
       message.text("");
       clearUpdate();
     }, 3000)
