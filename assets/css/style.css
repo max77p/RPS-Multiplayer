@@ -5,13 +5,14 @@ body{
 .mainContainer{
     max-height:100%;
     max-width:100%;
-    
+    margin:1em;
     background-image: url("../images/wallpaper.jpg");
     background-repeat: no-repeat;
     background-size:100% 100%;
     /* background-size:cover; */
     /* border:2px solid black; */
     box-shadow: -1px 0px 10px 12px #888888;
+    border-radius: 5px 5px;
 }
 
 #title{
@@ -44,7 +45,7 @@ body{
     justify-content: center;
 }
 .rightStart{
-    height: 20em;
+   
     display: flex;
     /* flex-direction: column; */
     justify-content: center;

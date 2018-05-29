@@ -439,27 +439,31 @@ $('.quitBtn').on("click", function (e) {
   e.stopPropagation();
 
   //players.remove();
-  currentUser.update({
+  currentUser.set({
     "userid": "",
     "btn": "",
     "user": ""
   });
-  passUserName.update({
+  passUserName.set({
     "u2": "",
     "btn2": false,
     "u1": "",
     "btn1": false
   })
-  p1.update({
-    "losses": 0,
-    "name": "",
-    "wins": 0
-  })
-  p2.update({
-    "losses": 0,
-    "name": "",
-    "wins": 0
-  })
+
+  // p1.set({
+  //   "losses": 0,
+  //   "name": "",
+  //   "wins": 0
+  // })
+  // p2.set({
+  //   "losses": 0,
+  //   "name": "",
+  //   "wins": 0
+  // })
+
+  p1.remove();
+  p2.remove();
 
   $('.gameChoice1,.gameChoice2').hide();
   $('.playClick1,.playClick2').show();
