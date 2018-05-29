@@ -34,10 +34,12 @@ body,html{
     padding:2em;
     /* border:1px solid black; */
 }
-/* #message{
-    border:1px solid blue;
-} */
-
+.gameChoice1 h4{
+    font-size:1.4em;
+}
+.gameChoice2 h4{
+    font-size:1.4em;
+}
 #name-display{
     color:black;
 }
