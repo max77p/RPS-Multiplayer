@@ -143,30 +143,31 @@ $('.playClick1,.playClick2').on("click", function (e) {
         "btn": e.target.classList[3],
         "user": userplay.displayName
       })
+     
     }
   }
 });
 
 
 
-var donotallow;
-  currentUser.child('userid').on("value", function (snapshot) {
-    console.log(snapshot.val());
-    currUID = snapshot.val();
-    console.log(currUID);
-    console.log(prevUID);
-    if (currUID === prevUID) {
-      donotallow = true;//after prevuid is set, don't allow this user to click another button
-    }
-    else {
-      console.log("no previous id click event, you are good to go");
-      prevUID = currUID;
-      donotallow=false;
-    }
+var donotallow;//if user clicked, don't let them click another button
+currentUser.child('userid').on("value", function (snapshot) {
+  console.log(snapshot.val());
+  currUID = snapshot.val();
+  console.log(currUID);
+  console.log(prevUID);
+  if (currUID === prevUID) {
+    donotallow = true;//after prevuid is set, don't allow this user to click another button
+  }
+  else {
+    console.log("no previous id click event, you are good to go");
+    prevUID = currUID;
+    donotallow = false;
+  }
 
-  });
+});
 
-
+//TODO-check which button clicked and then bind the username and hide the button
 currentUser.on("value", function (snapshot) {
   console.log(snapshot.val().btn);//playclick1
   var clicked = snapshot.val().btn;
@@ -188,8 +189,6 @@ currentUser.on("value", function (snapshot) {
 
 });
 
-
-
 $('.gameChoice1').hide();
 $('.gameChoice2').hide();
 
@@ -200,6 +199,11 @@ function addP1Screen(elName, elId, elBtn) {
   h2.html(elName);
   $('.playerOne').prepend(h2);
   //$('.playClick1').attr("data-name", elName);
+  p1.set({
+    "losses":0,
+    "name":elName,
+    "wins":0
+  })
 }
 
 function addP2Screen(elName, elId, elBtn) {
@@ -208,6 +212,11 @@ function addP2Screen(elName, elId, elBtn) {
   h2.html(elName);
   $('.playerTwo').prepend(h2);
   //$('.playClick1').attr("data-name", elName);
+  p2.set({
+    "losses":0,
+    "name":elName,
+    "wins":0
+  })
 }
 
 
