@@ -264,7 +264,6 @@ players.on("value", function (snapshot) {//start the game if both players clicke
   if (gameTime == 2) {
     readyPlay = true;
     readyToPlay(snapshot);
- 
   }
 });
 // var n=5;
@@ -545,7 +544,7 @@ database.ref(chatLog).orderByChild('chat').on("child_added", function (snapshot)
   var chatname = snapshot.val().name;
   var newLine = $("<br>");
   // Change the HTML
-  $(".chatArea").append(newLine).append(chattext + "  :" + chatname);
+  $(".chatArea").append(newLine).append(chatname + ": " + chattext);
   $("#chatInput").val("");
 },// If any errors are experienced, log them to console.
   function (errorObject) {
