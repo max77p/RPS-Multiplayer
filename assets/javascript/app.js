@@ -267,7 +267,7 @@ function readyToPlay(elSnap) {//only show player 1 div, don't show player 2 div
   if (user.displayName == user1.name) {
     $('.gameChoice1').show();//show the respective game choice screen
   }
-  else if (user.displayName == user2.name) {
+  if (user.displayName == user2.name) {
     $('.gameChoice2').show();//show the respective game choice screen
   }
 
@@ -301,15 +301,15 @@ $('.gameChoice2').on("click", function (e) {
 
 function bothPlayersSelected(el) {
   var user = firebase.auth().currentUser;
-  var h4One = $('<h4 class="showChoice">');
-  var h4Two = $('<h4 class="showChoice">');
+  //var h4One = $('<h4 class="showChoice">');
+  //var h4Two = $('<h4 class="showChoice">');
   if (oneSelected) {
     console.log(oneSelected);
     p1.update({
       "choice": el
     })
     $('.gameChoice1').hide();
-    //TODO:show which was selected
+    //TODO:show which was selected-done
     $('#p1Selection').html(el);
     //$('.playerOne').append(h4One);
   }
@@ -320,7 +320,7 @@ function bothPlayersSelected(el) {
       "choice": el
     })
     $('.gameChoice2').hide();
-    //TODO:show which was selected
+    //TODO:show which was selected-done
     $('#p2Selection').html(el);
     //$('.playerTwo').append(h4Two);
   }
@@ -335,11 +335,13 @@ players.on("value", function (snapshot) {
   var choiceDiv1 = $('<div class=currentChoice>');
   var choiceDiv2 = $('<div class=currentChoice>');
   var message = $('.message');
-
+  $('#p1Selection').empty();
+  $('#p2Selection').empty();
 
   if (p1 && p2) {//game logic
+    
     $('.gameChoice1,.gameChoice2').hide();
-    $('.showChoice').remove();
+    
     var results = compare(p1, p2);
 
     if (results == p1) {
@@ -357,6 +359,8 @@ players.on("value", function (snapshot) {
     setTimeout(function () {//after 5 seconds remove and reset
       readyToPlay(snapshot)
       $('.currentChoice').remove();
+      $('#p1Selection').empty();
+      $('#p2Selection').empty();
       message.text("");
       clearUpdate();
     }, 3000)
