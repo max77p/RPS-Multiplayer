@@ -79,6 +79,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     var uid = user.uid;
 
     allowUser(uid, isAnonymous);
+    $('.playClick1,.playClick2').show();
 
     userDB.child(uid).onDisconnect().remove();
 
@@ -114,7 +115,7 @@ function getPlayer() {
       displayName: getname
     }).then(function () {
       $('#nameInput').val('');
-      $('.playClick1,.playClick2').show();
+      
     }).catch(function (error) {
       // An error happened.
     });
@@ -290,7 +291,7 @@ function readyToPlay(elSnap) {//only show player 1 div, don't show player 2 div
 
   if (user.displayName == user1.name) {
     $('.gameChoice1').show();//show the respective game choice screen
-    
+    $('.quitBtn').show();
   }
   if (user.displayName == user2.name) {
     $('.gameChoice2').show();//show the respective game choice screen
@@ -466,12 +467,13 @@ function resetEntireGame(){
 
   currentUser.remove();
 
-  passUserName.set({
-    "u2": "",
-    "btn2": false,
-    "u1": "",
-    "btn1": false
-  })
+  // passUserName.set({
+  //   "u2": "",
+  //   "btn2": false,
+  //   "u1": "",
+  //   "btn1": false
+  // })
+  passUserName.remove();
 
   p1.remove();
   p2.remove();
