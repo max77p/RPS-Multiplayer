@@ -235,7 +235,7 @@ passUserName.on("value", function (snapshot) {
     return;
   }
   var one = snapshot.val().u1;
-  var two = snapshot.val().u2;
+  
   console.log(one);
   console.log(two);
 
@@ -246,7 +246,7 @@ passUserName.on("value", function (snapshot) {
     h21.html(one);
     $('.playerOne').prepend(h21);
   }
-
+  var two = snapshot.val().u2;
   if (two) {
     var h22 = $('<h2 class="userName">');
     $('.playClick2').hide();
