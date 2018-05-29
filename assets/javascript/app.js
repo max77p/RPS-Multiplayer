@@ -134,35 +134,40 @@ $('.playClick1,.playClick2').on("click", function (e) {
     alert("try again");
   }
   else {
-    currentUser.update({
-      "userid": userplay.uid,
-      "btn": e.target.classList[3],
-      "user": userplay.displayName
-    })
+    if (donotallow) {
+      return;
+    }
+    else {
+      currentUser.update({
+        "userid": userplay.uid,
+        "btn": e.target.classList[3],
+        "user": userplay.displayName
+      })
+    }
   }
-  checkUser(userplay.uid);
-
 });
 
-function checkUser(el) {
-  currentUser.child('userid').once("value", function (snapshot) {
+
+
+var donotallow;
+  currentUser.child('userid').on("value", function (snapshot) {
     console.log(snapshot.val());
     currUID = snapshot.val();
     console.log(currUID);
     console.log(prevUID);
     if (currUID === prevUID) {
-      console.log("previous id is not the same");
+      donotallow = true;//after prevuid is set, don't allow this user to click another button
     }
     else {
       console.log("no previous id click event, you are good to go");
       prevUID = currUID;
+      donotallow=false;
     }
 
   });
-}
 
 
-currentUser.once("value", function (snapshot) {
+currentUser.on("value", function (snapshot) {
   console.log(snapshot.val().btn);//playclick1
   var clicked = snapshot.val().btn;
   var username = snapshot.val().user;
@@ -185,23 +190,23 @@ currentUser.once("value", function (snapshot) {
 
 
 
-//TODO: add names to screen and remove buttons
 $('.gameChoice1').hide();
 $('.gameChoice2').hide();
 
+//TODO: add names to screen and remove buttons
 function addP1Screen(elName, elId, elBtn) {
-var h2=$('<h2 class="userName">');
+  var h2 = $('<h2 class="userName">');
   elBtn.hide();
   h2.html(elName);
   $('.playerOne').prepend(h2);
   //$('.playClick1').attr("data-name", elName);
 }
 
-function addP2Screen(elName,elId,elBtn){
-  var h2=$('<h2 class="userName">');
+function addP2Screen(elName, elId, elBtn) {
+  var h2 = $('<h2 class="userName">');
   elBtn.hide();
   h2.html(elName);
-  $('.playerOne').prepend(h2);
+  $('.playerTwo').prepend(h2);
   //$('.playClick1').attr("data-name", elName);
 }
 
