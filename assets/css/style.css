@@ -16,7 +16,8 @@ body{
 }
 
 #title{
-    margin:0;
+    /* margin:0 auto; */
+    text-align:center;
 }
 
 .chatArea{
@@ -25,11 +26,11 @@ body{
    overflow:scroll;
     height:10em;
     padding:2em;
-    border:1px solid black;
+    /* border:1px solid black; */
 }
-#message{
+/* #message{
     border:1px solid blue;
-}
+} */
 
 #name-display{
     color:black;
@@ -57,24 +58,28 @@ body{
 
 .chatArea{
     text-align:right;
-    background-color:white;
+    background-color: rgba(88, 85, 85, 0.16);
+    box-shadow: inset 0px 0px 0px 0px rgba(0,0,0,.075);
 }
 
 .innerBox{
-    border:1px solid black;
- 
+    border:1px dashed rgb(129, 127, 127);
     height:10em;
 }
 
 .nameForm{
-    max-width: 30em;
+    max-width: 20em;
     height: 57.4%;
     display: flex;
     flex-direction: column;
     margin-bottom:.5em;
-   
+    
 }
 
+input{
+    box-shadow: inset 4px -12px 20px 20px rgba(0,0,0,.075) !important;
+    background-color:transparent !important;
+}
 .startBtn,.quitBtn{
     /* width:50%; */
     
@@ -101,7 +106,7 @@ body{
 }
 
 .gameChoice1:hover,.gameChoice2:hover{
-    background-color:blue;
+    background-color:rgb(133, 133, 156);
     cursor: pointer;
 }
 

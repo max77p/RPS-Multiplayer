@@ -25,41 +25,7 @@
 
         <h3 id="userList"></h3>
 
-        <div class="row">
-            <div class="col-md-6 col-xs-6 leftChat">
-                <form class="nameForm">
-                    <div class="startForm">
-                        <input type="text" class="form-control" id="nameInput" placeholder="Enter your name">
-                        <small id="emailHelp" class="form-text text-muted">Please only change your after quitting a game in progress</small>
-                    </div>
-                    <button type="submit" class="btn btn-outline-primary  btn-sm startBtn">Submit Name</button>
-                </form>
-                <!-- <input type="text" class="form-control" id="quitGame" placeholder="Y/N and press enter"> -->
-                <button type="submit" class="btn btn-outline-primary btn-sm  quitBtn ">Press to Quit</button>
-            </div>
-            <div class="col-md-6 col-xs-6 rightStart">
-
-                <div class="chatSection">
-                    <div class="chatArea">
-
-
-                    </div>
-
-                    <form class="chatForm">
-                        <div class="form-group">```
-                            <input type="text" class="form-control" id="chatInput" placeholder="Chat here">
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                        </div>
-                    </form>
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-
+        <!--game section-->
         <div class="row" id="gameSection">
             <div class="col-md-4 col-xs-4 innerBox playerOne">
                 <button type="button" class="btn btn-primary gameBtn playClick1">Press to Play</button>
@@ -114,6 +80,43 @@
         </div>
 
 
+        <!--chat and name submit area-->
+        <div class="row">
+            <div class="col-md-6 col-xs-6 leftChat">
+                <form class="nameForm">
+                    <div class="startForm">
+                        <input type="text" class="form-control" id="nameInput" placeholder="Enter your name">
+                        <small id="emailHelp" class="form-text text-muted">If game in progress, hit quit before changing name!</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary startBtn">Submit Name</button>
+                </form>
+                <!-- <input type="text" class="form-control" id="quitGame" placeholder="Y/N and press enter"> -->
+                <button type="submit" class="btn btn-danger quitBtn ">Press to Quit</button>
+            </div>
+            <div class="col-md-6 col-xs-6 rightStart">
+
+                <div class="chatSection">
+                    <div class="chatArea">
+
+
+                    </div>
+
+                    <form class="chatForm">
+                        <div class="form-group">```
+                            <input type="text" class="form-control" id="chatInput" placeholder="Chat here">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+    <!--main congtainer-->
 
 
 
@@ -133,22 +136,22 @@
 
 
 
-        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-        <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
 
 
-        <!-- <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-auth.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-messaging.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase-functions.js"></script> -->
 
-        <!-- Comment out (or don't include) services you don't want to use -->
-        <!-- <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-storage.js"></script> -->
+    <!-- Comment out (or don't include) services you don't want to use -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-storage.js"></script> -->
 
-        <script src="./assets/javascript/app.js"></script>
+    <script src="./assets/javascript/app.js"></script>
 
 </body>
 
