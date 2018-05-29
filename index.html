@@ -21,23 +21,23 @@
 <body>
     <div class="container mainContainer">
         <!-- <button type="button" class="btn btn-primary" id="btnLogout">Logout</button> -->
-        <h1>Welcome to RPS</h1>
+        <h1 id="title">Welcome to RPS</h1>
 
-        <h1 id="userList"></h1>
+        <h3 id="userList"></h3>
 
         <div class="row">
-            <div class="col-md-6 leftChat">
+            <div class="col-md-6 col-xs-6 leftChat">
                 <form class="nameForm">
                     <div class="startForm">
                         <input type="text" class="form-control" id="nameInput" placeholder="Enter your name">
                         <small id="emailHelp" class="form-text text-muted">Please only change your after quitting a game in progress</small>
                     </div>
-                    <button type="submit" class="btn btn-primary startBtn">Submit Name</button>
+                    <button type="submit" class="btn btn-outline-primary  btn-sm startBtn">Submit Name</button>
                 </form>
                 <!-- <input type="text" class="form-control" id="quitGame" placeholder="Y/N and press enter"> -->
-                <button type="submit" class="btn btn-primary quitBtn">Press to Quit</button>
+                <button type="submit" class="btn btn-outline-primary btn-sm  quitBtn ">Press to Quit</button>
             </div>
-            <div class="col-md-6 rightStart">
+            <div class="col-md-6 col-xs-6 rightStart">
 
                 <div class="chatSection">
                     <div class="chatArea">
@@ -61,8 +61,8 @@
 
 
         <div class="row" id="gameSection">
-            <div class="col-md-4 innerBox playerOne">
-                <button type="button" class="btn btn-primary gameBtn playClick1">Press to Play</button>
+            <div class="col-md-4 col-xs-4 innerBox playerOne">
+                <button type="button" class="btn btn-outline-primary btn-sm gameBtn playClick1">Press to Play</button>
                 <h2 id="nameOne"></h2>
                 <h4 id="p1Selection" class="bothSelected"></h4>
 
@@ -84,13 +84,13 @@
                 </div>
             </div>
 
-            <div class="col-md-4 innerBox gameMessage">
+            <div class="col-md-4 col-xs-4 innerBox gameMessage">
                 <h2 class="message"></h2>
                 <!--show game result here-->
             </div>
 
-            <div class="col-md-4 innerBox playerTwo">
-                <button type="button" class="btn btn-primary gameBtn playClick2">Press to Play</button>
+            <div class="col-md-4 col-xs-4 innerBox playerTwo">
+                <button type="button" class="btn btn-outline-primary btn-sm gameBtn playClick2">Press to Play</button>
                 <h2 id="nameTwo"></h2>
                 <h4 id="p2Selection" class="bothSelected"></h4>
 

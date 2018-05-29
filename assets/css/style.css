@@ -4,10 +4,18 @@ body{
 }
 .mainContainer{
     max-height:100%;
+    max-width:100%;
+    
     background-image: url("../images/wallpaper.jpg");
     background-repeat: no-repeat;
     background-size:100% 100%;
-    border:2px solid black;
+    /* background-size:cover; */
+    /* border:2px solid black; */
+    box-shadow: -1px 0px 10px 12px #888888;
+}
+
+#title{
+    margin:0;
 }
 
 .chatArea{
@@ -48,6 +56,7 @@ body{
 
 .chatArea{
     text-align:right;
+    background-color:white;
 }
 
 .innerBox{
@@ -57,7 +66,7 @@ body{
 }
 
 .nameForm{
-    max-width: 100%;
+    max-width: 30em;
     height: 57.4%;
     display: flex;
     flex-direction: column;
@@ -66,7 +75,7 @@ body{
 }
 
 .startBtn,.quitBtn{
-    width:50%;
+    /* width:50%; */
     
 }
 
@@ -123,10 +132,15 @@ body{
     top: 0;
 }
 .counter{
-    width:50%;
+width: 10em;
     display:flex;
     justify-content: space-between;
     align-items:flex-end;
     position: absolute;
     bottom: 0;
+}
+@media only screen and (max-width: 540px) {
+    .counter {
+        width:6em;
+    }
 }
