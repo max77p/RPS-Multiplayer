@@ -180,10 +180,12 @@ currentUser.on("value", function (snapshot) {
 
   if (clickedClass1.hasClass(clicked)) {
     console.log("btn 1 binded!");
+    clickedClass1.hide();
     addP1Screen(username, userid, clickedClass1);
   }
   else if (clickedClass2.hasClass(clicked)) {
     console.log("btn 2 binded!");
+    clickedClass2.hide();
     addP2Screen(username, userid, clickedClass2);
   }
 
