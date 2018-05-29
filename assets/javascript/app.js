@@ -337,53 +337,55 @@ var p2Win = 0;
 var p2Lost = 0;
 players.on("value", function (snapshot) {
   console.log(snapshot.val());
-  var p1 = snapshot.val().one['choice'];
+  var p1Choice = snapshot.val().one['choice'];
   //console.log(p1);
-  var p2 = snapshot.val().two['choice'];
+  var p2Choice = snapshot.val().two['choice'];
   //console.log(p2);
   var choiceDiv1 = $('<div class=currentChoice>');
   var choiceDiv2 = $('<div class=currentChoice>');
   var message = $('.message');
 
 
-  if (p1 && p2) {//game logic
+  if (p1Choice && p2Choice) {//game logic
     $('#p1Selection').empty();
     $('#p2Selection').empty();
     $('.gameChoice1,.gameChoice2').hide();
+    // $('.game1,.game2').hide();
 
-    var results = compare(p1, p2);
+    var results = compare(p1Choice, p2Choice);
 
-    if (results == p1) {
+    if (results == p1Choice) {
       message.text("Player one wins!");
       p1Win += 1;//increase score by 1 for p1
       p2Lost += 1;//increase loss by 1 for p2
       $('#wins1').html("Wins: " + p1Win);
       $('#loss2').html("Lost: " + p2Lost);
-      p1.update({
-        "wins":p1Win
-      })
-      p2.update({
-        "losses":p2Lost
-      })
+      // p1.update({
+      //   "wins": p1Win
+      // })
+      // p2.update({
+      //   "losses": p2Lost
+      // })
     }
-    else if (results == p2) {
+    else if (results == p2Choice) {
       message.text("Player two wins!");
       p2Win += 1;
       p1Lost += 1;
       $('#wins2').html("Wins: " + p2Win);
       $('#loss1').html("Lost: " + p1Lost);
-      p2.update({
-        "wins":p2Win
-      })
-      p1.update({
-        "losses":p1Lost
-      })
+      // p2.update({
+      //   "wins": p2Win
+      // })
+      // p1.update({
+      //   "losses": p1Lost
+      // })
     }
-    else {
+
+    else if (p1Choice === p2Choice) {
       message.text("It's a tie!");
     }
-    $('.playerOne').append(choiceDiv1.html(p1));
-    $('.playerTwo').append(choiceDiv2.html(p2));
+    $('.playerOne').append(choiceDiv1.html(p1Choice));
+    $('.playerTwo').append(choiceDiv2.html(p2Choice));
 
     setTimeout(function () {//after 5 seconds remove and reset
       readyToPlay(snapshot)
@@ -431,7 +433,7 @@ $('.quitBtn').on("click", function (e) {
     "wins": 0
   })
 
-$('.gameChoice1,.gameChoice2').hide();
+  $('.gameChoice1,.gameChoice2').hide();
   $('.playClick1,.playClick2').show();
 
   quitGame1 = true;
@@ -448,9 +450,9 @@ $('.gameChoice1,.gameChoice2').hide();
 // var results = compare(userChoice,computerChoice);
 // Compare user choice vs computer choice
 var compare = function (choice1, choice2) {
-  if (choice1 === choice2) {
-    return "It's a tie!";
-  }
+  // if (choice1 === choice2) {
+  //   return "It's a tie!";
+  // }
   if (choice1 === "Rock" && choice2 === "Scissors") {
     // rock wins
     return choice1;
@@ -458,8 +460,8 @@ var compare = function (choice1, choice2) {
   else if (choice2 === "Rock" && choice1 === "Scissors") {
     return choice2;
   }
- 
-  else if (choice1 === "Paper" && choice2 === "Rock") {
+
+  if (choice1 === "Paper" && choice2 === "Rock") {
     // paper wins
     return choice1;
   }
@@ -467,7 +469,7 @@ var compare = function (choice1, choice2) {
     return choice2;
   }
 
-  else if (choice1 === "Scissors" && choice2 === "Paper") {
+  if (choice1 === "Scissors" && choice2 === "Paper") {
     //scissors wins
     return choice1;
   }
