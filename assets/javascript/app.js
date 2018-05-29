@@ -223,16 +223,16 @@ function addP2Screen(elName, elId, elBtn) {
 var readyPlay;
 players.on("value", function (snapshot) {//start the game if both players clicked
   var gameTime = snapshot.numChildren();
-  //console.log(gameTime);
+  console.log(gameTime);
   if (gameTime == 2) {
     readyToPlay(snapshot);
   }
 });
 
-function readyToPlay(el) {//only show player 1 div, don't show player 2 div
-  var user1 = el.val()['one'];
+function readyToPlay(elSnap) {//only show player 1 div, don't show player 2 div
+  var user1 = elSnap.val()['one'];
   //console.log(user1.name);
-  var user2 = el.val()['two'];
+  var user2 = elSnap.val()['two'];
   var user = firebase.auth().currentUser;
   //console.log(user);
 
@@ -262,6 +262,7 @@ $('.gameChoice1').on("click", function (e) {
 
 $('.gameChoice2').on("click", function (e) {
   e.preventDefault();
+  e.stopPropagation();
   console.log($(this));
   var user2Choice = $(this)[0].innerText.trim();
   console.log(user2Choice);
@@ -287,9 +288,7 @@ function bothPlayersSelected(el) {
       "choice": el
     })
     $('.gameChoice2').hide();
-
   }
-
 }
 
 players.on("value", function (snapshot) {
@@ -323,12 +322,7 @@ players.on("value", function (snapshot) {
       message.text("");
       clearUpdate();
     }, 2000)
-
-
-
   }
-
-
 });
 
 function clearUpdate() {
